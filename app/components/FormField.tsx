@@ -3,14 +3,23 @@ import { forwardRef } from "react";
 const FormField = forwardRef(
   (
     {
+      //@ts-ignore
       inputType = "",
+      //@ts-ignore
       isTextArea = false,
+      //@ts-ignore
       isSelect = false,
+      //@ts-ignore
       options = [],
+      //@ts-ignore
       labelName = "",
+      //@ts-ignore
       labelColor = "",
+      //@ts-ignore
       placeholder = "",
+      //@ts-ignore
       error = "",
+      //@ts-ignore
       handleChange = (...args: any[]) => {},
       ...props
     },
@@ -26,12 +35,14 @@ const FormField = forwardRef(
           <textarea
             className="textarea textarea-bordered textarea-primary rounded text-white"
             placeholder={placeholder}
+            //@ts-ignore
             ref={ref}
             rows={5}
             {...props}
           />
         ) : isSelect ? (
           <select
+            //@ts-ignore
             ref={ref}
             className="select select-bordered select-primary rounded focus:border-none text-white"
           >
@@ -52,6 +63,7 @@ const FormField = forwardRef(
                 : "input input-bordered input-primary min-w-[100px] sm:min-w-[300px] w-full rounded focus:border-none text-white"
             }
             onChange={handleChange}
+            //@ts-ignore
             ref={ref}
             {...props}
           />

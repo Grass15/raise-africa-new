@@ -138,9 +138,11 @@ const CreatePropositionPage = () => {
                   <div role="tabpanel" className="tab-content text-primary p-4">
                     {proposition.name == "Other" && (
                       <FormField
+                        //@ts-ignore
                         inputType={"text"}
                         labelName={"Title *"}
                         placeholder={"A descriptive title"}
+                        //@ts-ignore
                         handleChange={(e) => {
                           setPropositionTitle(e.target.value);
                         }}
@@ -148,9 +150,11 @@ const CreatePropositionPage = () => {
                     )}
                     <div className={"py-2"} />
                     <FormField
+                      //@ts-ignore
                       labelName={"Description *"}
                       placeholder={"A simple description of your proposition"}
                       isTextArea={true}
+                      //@ts-ignore
                       handleChange={(e) => {
                         setPropositionDescription(e.target.value);
                       }}

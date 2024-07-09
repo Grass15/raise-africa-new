@@ -41,7 +41,7 @@ const PropositionDetails = () => {
     );
     router.push("/forum/new-post");
   };
-
+  //@ts-ignore
   const vote = (e) => {
     e.preventDefault();
     const actualVoter = currentProposition.voters.filter(

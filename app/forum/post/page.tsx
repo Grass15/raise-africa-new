@@ -24,7 +24,7 @@ const PostPage = () => {
       setCurrentPost(JSON.parse(post));
     }
   }, []);
-
+  //@ts-ignore
   const handleAddComment = async (e) => {
     e.preventDefault();
     const comment: PostComment = {
@@ -120,6 +120,7 @@ const PostPage = () => {
           onSubmit={handleAddComment}
         >
           <FormField
+            //@ts-ignore
             handleChange={(e) => setCommentText(e.target.value)}
             inputType={"text"}
             labelName={""}

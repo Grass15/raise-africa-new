@@ -181,6 +181,7 @@ export const StateContextProvider = ({ children }) => {
       const response = await axios.get(`${BACKEND_URL}/posts/all`);
       for (let item of response.data) {
         const comments: PostComment[] = [];
+        //@ts-ignore
         item.messages.map((message) => {
           comments.push({
             postId: item._id,

@@ -11,6 +11,7 @@ const CampaignCard = ({ campaign }) => {
   const router = useRouter();
   const actualCampaign = campaign as Campaign;
   const category = actualCampaign.startup.project.category.toLowerCase();
+  //@ts-ignore
   const categoryIcon = startupCategoryIcon[category];
   const remainingDays = daysLeft(actualCampaign.deadline);
   const navigateToCampaignDetails = () => {

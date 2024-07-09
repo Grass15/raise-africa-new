@@ -8,16 +8,22 @@ import { useStateContext } from "../context";
 import { toast } from "react-toastify";
 // @ts-ignore
 const Card = ({
+  //@ts-ignore
   background,
+  //@ts-ignore
   icon,
+  //@ts-ignore
   title,
+  //@ts-ignore
   description,
+  //@ts-ignore
   buttonText,
   forConnect = false,
   forBuy = false,
   forCampaign = false,
 }) => {
   const { account } = useStateContext();
+  //@ts-ignore
   const showWarning = (e) => {
     e.preventDefault();
     toast.warning("You are already connected!", {

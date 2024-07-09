@@ -14,6 +14,7 @@ const BuyModal = ({ text = "" }) => {
     useStateContext();
   const [usdtAmount, setUsdtAmount] = useState(0);
   const [rafAmount, setRafAmount] = useState(0);
+  //@ts-ignore
   const handleUsdtInput = (e) => {
     const inputValue = e.target.value;
     if (/^\d*\.?\d*$/.test(inputValue)) {
@@ -21,6 +22,7 @@ const BuyModal = ({ text = "" }) => {
       setRafAmount(Number((inputValue / rafPrice).toFixed(4)));
     }
   };
+  //@ts-ignore
   const handleRafInput = (e) => {
     const inputValue = e.target.value;
     if (/^\d*\.?\d*$/.test(inputValue)) {

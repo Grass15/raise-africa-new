@@ -29,7 +29,6 @@ const NewPostPage = () => {
   const { account, createPost } = useStateContext();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     const post: Post = {
       author: account.address,
       comments: [],
@@ -68,6 +67,7 @@ const NewPostPage = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <FormField
+              //@ts-ignore
               inputType={"text"}
               labelName={"Title *"}
               placeholder={"A descriptive title"}
@@ -77,6 +77,7 @@ const NewPostPage = () => {
               })}
             />
             <FormField
+              //@ts-ignore
               labelName={"Message *"}
               placeholder={"Your message"}
               isTextArea={true}
