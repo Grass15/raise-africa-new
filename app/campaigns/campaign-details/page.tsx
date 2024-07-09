@@ -17,6 +17,7 @@ const CampaignDetailsPage = () => {
   const remainingDays = daysLeft(currentCampaign.deadline) as string;
   const [investedAmount, setInvestedAmount] = useState(0);
 
+  //@ts-ignore
   const handleInvestment = (e) => {
     setInvestedAmount(e.target.value);
   };
