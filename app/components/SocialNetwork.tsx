@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+//@ts-ignore
 const SocialNetwork = ({ onSocialNetworksUpdate, name }) => {
   const [socialNetwork, setCurrentSocialNetwork] = useState({
     name: name,
@@ -8,6 +9,7 @@ const SocialNetwork = ({ onSocialNetworksUpdate, name }) => {
   const onSubmit = () => {
     onSocialNetworksUpdate(socialNetwork);
   };
+  //@ts-ignore
   const handleFieldChange = (fieldName: string, e) => {
     setCurrentSocialNetwork({ ...socialNetwork, [fieldName]: e.target.value });
     onSocialNetworksUpdate(socialNetwork);
