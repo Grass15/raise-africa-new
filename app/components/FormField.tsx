@@ -62,4 +62,6 @@ const FormField = forwardRef(
   },
 );
 
+FormField.displayName = "FormField";
+
 export default FormField;
