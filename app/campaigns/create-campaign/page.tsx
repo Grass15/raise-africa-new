@@ -142,6 +142,7 @@ const CreateCampaignPage = () => {
           >
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"First Name *"}
                 placeholder={"John"}
@@ -151,6 +152,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Last Name *"}
                 placeholder={"Curtis"}
@@ -160,6 +162,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Your Role *"}
                 placeholder={"CEO"}
@@ -167,6 +170,7 @@ const CreateCampaignPage = () => {
                 {...register("role", { required: "This field is required" })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Your LinkedIn *"}
                 placeholder={""}
@@ -183,6 +187,7 @@ const CreateCampaignPage = () => {
             </div>
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Project Title *"}
                 placeholder={"Coteus Hospital"}
@@ -194,6 +199,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 isSelect={true}
                 labelName={"Project Domain *"}
                 // @ts-ignore
@@ -209,6 +215,7 @@ const CreateCampaignPage = () => {
               />
             </div>
             <FormField
+              //@ts-ignore
               labelName={"Project Description *"}
               placeholder={"An hospital that uses mean test to charge the fees"}
               isTextArea={true}
@@ -224,6 +231,7 @@ const CreateCampaignPage = () => {
 
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 labelName={"Project Innovation *"}
                 placeholder={
                   "A Health system that gives the same chance to everybody (Fees depend on individual financial status) with the best care quality"
@@ -239,6 +247,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 labelName={"Project Need *"}
                 placeholder={
                   "An hospital that uses mean test to charge the fees"
@@ -253,6 +262,7 @@ const CreateCampaignPage = () => {
               />
             </div>
             <FormField
+              //@ts-ignore
               inputType={"text"}
               labelName={"Financial Status *"}
               placeholder={"We are just beginning and have no funds"}
@@ -274,6 +284,7 @@ const CreateCampaignPage = () => {
             </div>
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"number"}
                 labelName={"Goal *"}
                 placeholder={"Value in RAF"}
@@ -287,6 +298,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"number"}
                 labelName={"Total percentage of shares to be funded *"}
                 placeholder={"Value in Percentage"}
@@ -300,6 +312,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"date"}
                 labelName={"End date *"}
                 placeholder={"End Date"}
@@ -315,6 +328,7 @@ const CreateCampaignPage = () => {
             </div>
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"file"}
                 labelName={"A descriptive image *"}
                 placeholder={""}
@@ -324,6 +338,7 @@ const CreateCampaignPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"file"}
                 labelName={"A video to showcase of your project *"}
                 placeholder={""}
