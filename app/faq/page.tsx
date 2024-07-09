@@ -105,8 +105,8 @@ const FAQPage = () => {
               <div className="collapse-content">
                 <p>
                   Once a campaign reaches its funding goal, the raised funds are
-                  securely disbursed to the startup's wallet. The startup can
-                  then use these funds to further develop and scale their
+                  securely disbursed to the startup`&apos;`s wallet. The startup
+                  can then use these funds to further develop and scale their
                   projects.
                 </p>
               </div>

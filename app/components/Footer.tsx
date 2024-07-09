@@ -18,7 +18,7 @@ const Footer = () => {
         </Link>
         <p className="text-sm text-[#CFCFCF] w-64 ml-3">
           Join us in revolutionizing the way blockchain startups in Africa are
-          funded. Let's create a sustainable future Together.
+          funded. Let`&apos;`s create a sustainable future Together.
         </p>
         <div className={"flex flex-row gap-4 ml-3"}>
           <Link href={"https://t.me/raise_africa"} target={"_blank"}>

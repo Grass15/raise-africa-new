@@ -143,7 +143,7 @@ const PostPage = () => {
         </form>
         <div className={"grid justify-items-end gap-4 mt-10 w-full"}>
           {currentPost.comments?.map((comment, index) => (
-            <CommentCard comment={comment} />
+            <CommentCard key={index} comment={comment} />
           ))}
         </div>
       </div>
