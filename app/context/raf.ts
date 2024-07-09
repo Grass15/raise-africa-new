@@ -39,7 +39,9 @@ export const priceContract = getContract({
 // });
 
 export const buyContract = () => {
+  //@ts-ignore
   if (typeof window !== "undefined" && window.ethereum) {
+    //@ts-ignore
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     return new ethers.Contract(BUY_RAF_ADDRESS, BUY_RAF_ABI, signer);
