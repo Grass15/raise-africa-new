@@ -1,22 +1,71 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Inter", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    @font-face {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+    }
+}
+@media (hover:hover) {
+    .menu li > *:not(ul, .menu-title, details, .btn):active,
+    .menu li > *:not(ul, .menu-title, details, .btn).active,
+    .menu li > details > summary:active {
+        @apply bg-none;
+    }
+    @supports (color: oklch(0% 0 0)) {
+        :where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):not(.active, .btn):hover, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):not(.active, .btn):hover {
+            background: none;
+            @apply text-primary;
+        }
+    }
+}
+:where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):not(summary, .active, .btn).focus, :where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):not(summary, .active, .btn):focus, :where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):is(summary):not(.active, .btn):focus-visible, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):not(summary, .active, .btn).focus, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):not(summary, .active, .btn):focus, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):is(summary):not(.active, .btn):focus-visible {
+    cursor: pointer;
+    background: none;
+    --tw-text-opacity: 1;
+    @apply text-primary;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+.menu li > *:not(ul, .menu-title, details, .btn):active,
+.menu li > *:not(ul, .menu-title, details, .btn).active,
+.menu li > details > summary:active {
+    --tw-bg-opacity: 1;
+    background: none;
+    --tw-text-opacity: 1;
+    @apply text-primary;
+}
+.menu li > *:not(ul, .menu-title, details, .btn):active,
+.menu li > *:not(ul, .menu-title, details, .btn).active,
+.menu li > details > summary:active {
+    --tw-bg-opacity: 1;
+    background: none;
+    --tw-text-opacity: 1;
+    @apply text-primary;
 }
 
-a {
-  color: #84309c;
-  text-decoration: none;
+.no-bg {
+    background: none;
 }
 
-* {
-  box-sizing: border-box;
+.lora-title {
+    font-family: "Lora-Bold", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
 }
 
-body {
-  color: #e7e8e8;
-  background: #070707;
+.btn {
+    @apply rounded;
 }
+
+.text-secondary {
+    color: #7d7d7d;
+}
+
+
