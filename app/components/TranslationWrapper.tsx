@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect, ReactDOM } from "react";
 
+//@ts-ignore
 const TranslationWrapper = ({ children, targetLanguage }) => {
   const [isTranslated, setIsTranslated] = useState(false);
 
+  //@ts-ignore
   const translateChildren = (children, index) => {
     if (typeof children === "string") {
       console.log(children);

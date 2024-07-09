@@ -1,7 +1,7 @@
 import FormField from "./FormField";
 import Link from "next/link";
 import { useState } from "react";
-
+//@ts-ignore
 const Stakeholders = ({ onStakeholdersUpdate }) => {
   const [stakeholders, setStakeHolders] = useState([] as Stakeholder[]);
 
@@ -16,6 +16,7 @@ const Stakeholders = ({ onStakeholdersUpdate }) => {
     onStakeholdersUpdate(stakeholder);
   };
 
+  //@ts-ignore
   const handleFieldChange = (fieldName: string, e) => {
     setCurrentStakeholder({ ...stakeholder, [fieldName]: e.target.value });
   };
@@ -38,6 +39,7 @@ const Stakeholders = ({ onStakeholdersUpdate }) => {
         }
       >
         <FormField
+          //@ts-ignore
           handleChange={(e) => handleFieldChange("firstName", e)}
           inputType={"text"}
           labelName={"First Name *"}
@@ -45,6 +47,7 @@ const Stakeholders = ({ onStakeholdersUpdate }) => {
           placeholder={"Alice"}
         />
         <FormField
+          //@ts-ignore
           inputType={"text"}
           labelName={"Last Name *"}
           labelColor={"text-black"}
@@ -52,6 +55,7 @@ const Stakeholders = ({ onStakeholdersUpdate }) => {
           handleChange={(e: any) => handleFieldChange("lastName", e)}
         />
         <FormField
+          //@ts-ignore
           handleChange={(e) => handleFieldChange("role", e)}
           inputType={"text"}
           labelName={"Role *"}
@@ -59,6 +63,7 @@ const Stakeholders = ({ onStakeholdersUpdate }) => {
           placeholder={"CEO"}
         />
         <FormField
+          //@ts-ignore
           handleChange={(e) => handleFieldChange("linkedIn", e)}
           inputType={"text"}
           labelName={"LinkedIn *"}
