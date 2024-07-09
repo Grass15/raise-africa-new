@@ -4,26 +4,27 @@ import avatar from "../../public/images/avatar.png";
 import { useStateContext } from "../context";
 import CampaignCard from "../components/CampaignCard";
 import PropositionCard from "../components/PropositionCard";
+import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
-  const { isConnected, account } = useStateContext();
+  const { isConnected, account, getUserPropositions } = useStateContext();
   const { getCampaigns } = useStateContext();
   const campaigns: Campaign[] = getCampaigns();
-  const proposition = {
-    creator: "0xb2d83C2F63D5A915E3F1A51f07707894562f795671236657",
-    title: "Distribution of dividends",
-    description:
-      "Nulla dolor velit adipisicing duis excepteur esse in duis nostrud\n" +
-      "        occaecat mollit incididunt deserunt sunt. Ut ut sunt laborum ex occaecat\n" +
-      "        eu tempor labore enim adipisicing minim ad. Est in quis eu dolore\n" +
-      "        occaecat excepteur fugiat dolore nisi aliqua fugiat enim ut cillum.\n" +
-      "        Labore enim duis nostrud eu. Est ut eiusmod consequat irure quis\n" +
-      "        deserunt ex. Enim laboris dolor magna pariatur. Dolor et ad sint\n" +
-      "        voluptate sunt elit mollit officia ad enim sit consectetur enim.",
-    votes: 800,
-    percentage: 70,
-    deadline: new Date().getTime() + 1000 * 60 * 60 * 24 * 6,
-  } as Proposition;
+
+  const [propositions, setPropositions] = useState<Proposition[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const propositions = await getUserPropositions();
+        setPropositions(propositions);
+        console.log(propositions);
+      } catch (err) {
+        console.log("Error occured when fetching Propostions");
+      }
+    })();
+  }, []);
+
   return (
     <section className={"flex flex-col gap-6 px-5 py-5 w-full "}>
       <div className="w-full max-[806px]:max-w-[458px] max-w-screen-md xl:max-w-screen-lg  pt-5 mx-auto sm:py-5 ">
@@ -83,11 +84,9 @@ const ProfilePage = () => {
                 className="tab-content bg-base-100 border-base-300 rounded-box p-6"
               >
                 <div className={"gap-14 mx-auto mt-8 sm:grid sm:grid-cols-2 "}>
-                  <PropositionCard proposition={proposition} />
-                  <PropositionCard proposition={proposition} />
-                  <PropositionCard proposition={proposition} />
-                  <PropositionCard proposition={proposition} />
-                  <PropositionCard proposition={proposition} />
+                  {propositions?.map((proposition, index) => (
+                    <PropositionCard key={index} proposition={proposition} />
+                  ))}
                 </div>
               </div>
 

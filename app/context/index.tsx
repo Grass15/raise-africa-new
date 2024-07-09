@@ -248,6 +248,35 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const getUserPropositions = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/propositions`);
+      const propositions: Proposition[] = [];
+      for (let proposition of response.data) {
+        const prop: Proposition = {
+          id: proposition._id,
+          status: proposition.status,
+          creator: proposition.submitter_wallet_address,
+          deadline:
+            new Date(proposition.creation_date as string).getTime() +
+            1000 * 60 * 60 * 24 * 10,
+          description: proposition.description,
+          percentage: proposition.votes,
+          title: proposition.title ?? proposition.type.name,
+          type: proposition.type.name,
+          voters: proposition.voters,
+        };
+        if (prop.creator == account?.address) {
+          propositions.push(prop);
+        }
+      }
+      //console.log(propositions);
+      return propositions;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getRafTVL = async () => {
     const totalSupply = await readContract({
       contract: RAF.contract,
@@ -429,6 +458,7 @@ export const StateContextProvider = ({ children }) => {
         setCampaignsFilteredCategories,
         createProposition,
         getPropositions,
+        getUserPropositions,
         getRafTVL,
         voteProposition,
         propositionsFilteredCategories,
