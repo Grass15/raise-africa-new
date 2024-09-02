@@ -65,9 +65,18 @@ const Footer = () => {
         <h6 className="footer-title text-white font-semibold text-lg">
           Terms & Conditions
         </h6>
-        <a className="link link-hover">Terms of use</a>
-        <a className="link link-hover">Privacy policy</a>
-        <a className="link link-hover">Cookie policy</a>
+        <Link className={`hover:text-primary`} href={"/terms-of-use"}>
+          Terms of use
+        </Link>
+        <Link className={`hover:text-primary`} href={"/privacy-policy"}>
+          Privacy policy
+        </Link>
+        <Link className={`hover:text-primary`} href={"/cookie-policy"}>
+          Cookie policy
+        </Link>
+        {/*<a className="link link-hover">Terms of use</a>*/}
+        {/*<a className="link link-hover">Privacy policy</a>*/}
+        {/*<a className="link link-hover">Cookie policy</a>*/}
       </nav>
 
       <nav className={"flex flex-col items-center align-middle"}>

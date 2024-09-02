@@ -117,22 +117,9 @@ const AboutPage = () => {
                 future for the continent.
               </p>
             </div>
-            {/*<p>*/}
-            {/*  <a*/}
-            {/*    className={"underline text-primary"}*/}
-            {/*    href="https://t.me/raise_africa"*/}
-            {/*    target={"_blank"}*/}
-            {/*    rel="noreferrer"*/}
-            {/*  >*/}
-            {/*    Join us*/}
-            {/*  </a>{" "}*/}
-            {/*  now and let's make a difference together!*/}
-            {/*</p>*/}
           </div>
         </div>
       </div>
-
-      {/*{isConnected ? <h1>Hello, Campaigns Page!</h1> : <Error403 />}*/}
     </section>
   );
 };
