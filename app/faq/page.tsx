@@ -33,10 +33,9 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  Raise Africa is a crowdfunding platform designed to support
-                  innovative blockchain startups in Africa. Our mission is to
-                  create a sustainable ecosystem where startups can thrive by
-                  connecting them with global investors.
+                  Raise Africa is a crowdfunding platform that allows African
+                  businesses, whether startups or established, to raise funds
+                  through blockchain technology.
                 </p>
               </div>
             </div>
@@ -47,11 +46,9 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  Startups can create campaigns on our platform to raise funds
-                  for their projects. Investors can browse these campaigns and
-                  choose to support projects that align with their values and
-                  goals. Once a campaign reaches its funding target, the funds
-                  are disbursed to the startup.
+                  Businesses create campaigns to raise funds, and investors can
+                  buy tokens specific to these businesses to support their
+                  projects.
                 </p>
               </div>
             </div>
@@ -62,10 +59,9 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  We focus on startups addressing critical challenges in
-                  education, healthcare, the environment, anti-counterfeiting,
-                  and food security. Our goal is to support projects that have a
-                  significant impact on sustainable development in Africa.
+                  Raise Africa supports businesses in various sectors, whether
+                  related to blockchain, web3, or not, with a focus on impactful
+                  growth in Africa.
                 </p>
               </div>
             </div>
@@ -76,10 +72,8 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  To invest, you need to create an account on our platform and
-                  connect your digital wallet. Once your wallet is connected,
-                  you can browse active campaigns and invest in the startups of
-                  your choice using our RAF tokens.
+                  Browse the campaigns, select a business, and buy its token
+                  using USDT to become an investor.
                 </p>
               </div>
             </div>
@@ -90,10 +84,9 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  RAF tokens are the utility tokens used on our platform for
-                  transactions. Investors use RAF tokens to fund campaigns, and
-                  startups receive funding in RAF tokens, which can be converted
-                  into other cryptocurrencies or fiat currencies.
+                  RAF tokens are used to become a shareholder of Raise Africa,
+                  granting you voting rights, dividends, and potential capital
+                  gains.
                 </p>
               </div>
             </div>
@@ -104,10 +97,8 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  Once a campaign reaches its funding goal, the raised funds are
-                  securely disbursed to the startup`&apos;`s wallet. The startup
-                  can then use these funds to further develop and scale their
-                  projects.
+                  Once a campaign reaches its target, funds are securely
+                  disbursed to the business via the platform.
                 </p>
               </div>
             </div>
@@ -118,10 +109,8 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  We charge a transaction fee of 1 USDT per transaction on our
-                  platform. Additionally, we take a commission of 1 to 3% of the
-                  total amount raised by the startups. These fees help us
-                  maintain and improve our platform.
+                  A transaction fee of 1 USDT and a commission of 3% on the
+                  amount raised by the business.
                 </p>
               </div>
             </div>
@@ -132,11 +121,8 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  To create a campaign, sign up on our platform and complete the
-                  campaign creation form. Provide detailed information about
-                  your project, including your goals, funding target, and how
-                  the funds will be used. Once submitted, our team will review
-                  your campaign for approval.
+                  Sign up, create your campaign by providing necessary details
+                  about your business and goals, and submit it for approval.
                 </p>
               </div>
             </div>
@@ -147,9 +133,8 @@ const FAQPage = () => {
               </div>
               <div className="collapse-content">
                 <p>
-                  If you have any questions or need assistance, you can contact
-                  us via email at support@raiseafrica.finance or through our
-                  social media channels. We are here to help!
+                  For any inquiries or assistance, please contact us via the
+                  support options available on the website.
                 </p>
               </div>
             </div>

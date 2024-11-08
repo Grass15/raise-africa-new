@@ -44,11 +44,12 @@ const FormField = forwardRef(
           <select
             //@ts-ignore
             ref={ref}
+            {...props}
             className="select select-bordered select-primary rounded focus:border-none text-white"
           >
             <option disabled>Pick one</option>
             {options.map((option: any) => (
-              <option key={option.id} value={option.value}>
+              <option key={option.key} value={option.value}>
                 {option.text}
               </option>
             ))}

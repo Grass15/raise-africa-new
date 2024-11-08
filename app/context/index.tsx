@@ -28,7 +28,6 @@ export const StateContextProvider = ({ children }) => {
   const [currentProposition, setCurrentProposition] = useState(
     {} as Proposition,
   );
-
   //const BACKEND_URL = "http://127.0.0.1:5000";
   const BACKEND_URL = "https://raiseafrica.finance/flask";
   const [campaignsFilteredCategories, setCampaignsFilteredCategories] =
@@ -123,6 +122,27 @@ export const StateContextProvider = ({ children }) => {
         console.log(res.data);
         toast.success(
           "Your proposition has been created with success. Thank you!",
+          {
+            position: "top-center",
+            theme: "dark",
+          },
+        );
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        }
+      });
+  };
+
+  const addToWaitingList = async (business: any) => {
+    console.log(business);
+    axios
+      .post(`${BACKEND_URL}/projects/waiting-list`, business)
+      .then((res) => {
+        console.log(res.data);
+        toast.success(
+          "You have been successfully added to the waiting list. Thank you!",
           {
             position: "top-center",
             theme: "dark",
@@ -448,6 +468,7 @@ export const StateContextProvider = ({ children }) => {
         isConnected,
         createCampaign,
         getCampaigns,
+        addToWaitingList,
         currentCampaign,
         currentProposition,
         currentPost,

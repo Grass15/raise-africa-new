@@ -63,6 +63,14 @@ export function MainNavbar() {
             </li>
             <li>
               <Link
+                className={`hover:text-primary ${pathname === "/waiting-list" ? "text-primary" : ""}`}
+                href={"/waiting-list"}
+              >
+                Waiting list
+              </Link>
+            </li>
+            <li>
+              <Link
                 className={`hover:text-primary ${pathname === "/faq" ? "text-primary" : ""}`}
                 href={"/faq"}
               >
@@ -121,6 +129,14 @@ export function MainNavbar() {
               href={"/about"}
             >
               About us
+            </Link>
+          </li>
+          <li>
+            <Link
+              className={`hover:text-primary ${pathname === "/waiting-list" ? "text-primary" : ""}`}
+              href={"/waiting-list"}
+            >
+              Waiting list
             </Link>
           </li>
           <li>

@@ -11,8 +11,13 @@ const SocialNetwork = ({ onSocialNetworksUpdate, name }) => {
   };
   //@ts-ignore
   const handleFieldChange = (fieldName: string, e) => {
-    setCurrentSocialNetwork({ ...socialNetwork, [fieldName]: e.target.value });
-    onSocialNetworksUpdate(socialNetwork);
+    const updatedSocialNetwork = {
+      ...socialNetwork,
+      [fieldName]: e.target.value,
+    };
+    setCurrentSocialNetwork(updatedSocialNetwork); // Update the state
+    onSocialNetworksUpdate(updatedSocialNetwork); // Use the updated value
+    console.log(updatedSocialNetwork);
   };
   return (
     <div>

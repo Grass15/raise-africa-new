@@ -23,49 +23,42 @@ const AboutPage = () => {
               <h4 className={"text-primary font-semibold"}>Our Mission</h4>
               <p>
                 Raise Africa is dedicated to revolutionizing the funding
-                landscape for blockchain startups in Africa. Our mission is to
-                create a sustainable and inclusive ecosystem where innovative
-                solutions can thrive, addressing critical challenges in
-                education, healthcare, the environment, anti-counterfeiting, and
-                food security.
+                landscape for African businesses, enabling any company, startup
+                or not, to raise capital via blockchain. We aim to create an
+                inclusive ecosystem that supports innovation across various
+                sectors, including education, healthcare, and more.
               </p>
             </div>
             <div>
               <h4 className={"text-primary font-semibold"}>Our Vision</h4>
               <p>
-                We envision a future where blockchain technology drives
-                transformative change across Africa. By connecting global
-                investors with promising startups, we aim to foster a
-                collaborative environment that promotes sustainable growth and
-                development. Raise Africa is committed to empowering
-                entrepreneurs and providing them with the resources they need to
-                succeed.
+                We envision a future where businesses across Africa can secure
+                funds to drive sustainable development, supported by a global
+                network of investors.
               </p>
             </div>
             <div>
               <h4 className={"text-primary font-semibold"}>Our Story</h4>
               <p>
-                Founded with the belief that technology can be a catalyst for
-                positive change, Raise Africa was established as a decentralized
-                autonomous organization (DAO) to support blockchain startups in
-                Africa. Initially operating as a venture capital entity, we have
-                recently pivoted to a crowdfunding platform to better serve our
-                community and maximize our impact.
+                Originally a platform for blockchain startups, we have now
+                pivoted to become a crowdfunding platform, allowing all African
+                businesses to raise funds.
               </p>
             </div>
             <div>
               <h4 className={"text-primary font-semibold"}>What we do</h4>
               <p>
-                Raise Africa provides a seamless and secure platform for
-                startups to raise funds and for investors to support projects
-                that align with their values. Our platform offers:
+                Raise Africa offers a seamless platform where companies can
+                raise funds and investors can support ventures in line with
+                their values. Our offerings include:
               </p>
               <ul className={"flex flex-col gap-5"}>
                 <li>
                   <p>
-                    <span className={"text-primary"}>Access to Startups: </span>
-                    Discover and invest in a diverse range of blockchain
-                    startups focused on solving key challenges in Africa.
+                    <span className={"text-primary"}>
+                      Access to Companies:{" "}
+                    </span>
+                    Discover and invest in a wide variety of businesses.
                   </p>
                 </li>
                 <li>
@@ -73,8 +66,8 @@ const AboutPage = () => {
                     <span className={"text-primary"}>
                       Access to Investors:{" "}
                     </span>
-                    Startups can connect with a global network of investors
-                    eager to fund impactful projects
+                    Connect with global investors eager to support impactful
+                    ventures.
                   </p>
                 </li>
                 <li>
@@ -82,8 +75,7 @@ const AboutPage = () => {
                     <span className={"text-primary"}>
                       Affordable Solutions:{" "}
                     </span>
-                    Our transparent and cost-effective platform ensures that
-                    both investors and startups can maximize their efforts.
+                    Transparent, low-cost crowdfunding services
                   </p>
                 </li>
                 <li>
@@ -91,8 +83,7 @@ const AboutPage = () => {
                     <span className={"text-primary"}>
                       Efficient Disbursement:{" "}
                     </span>
-                    Secure and timely disbursement of funds to ensure that
-                    investments reach their intended projects promptly.
+                    Ensuring timely and secure distribution of funds.
                   </p>
                 </li>
               </ul>
@@ -100,21 +91,17 @@ const AboutPage = () => {
             <div>
               <h4 className={"text-primary font-semibold"}>Our Team</h4>
               <p>
-                Raise Africa is powered by a diverse team of experts in
-                blockchain technology, finance, and sustainable development. Our
-                team is passionate about creating opportunities for startups and
-                investors to collaborate and drive positive change across
-                Africa.
+                Our team consists of experts in finance, technology, and
+                business development, focused on empowering African companies.
               </p>
             </div>
             <div>
               <h4 className={"text-primary font-semibold"}>Join Us</h4>
               <p>
-                We invite you to join us in our mission to empower blockchain
-                startups in Africa. Whether you are an investor looking to make
-                a meaningful impact or a startup seeking funding, Raise Africa
-                is here to support you. Together, we can create a brighter
-                future for the continent.
+                Be part of our mission to create impactful investment
+                opportunities that foster Africa&apos;s development. Whether
+                you&apos;re an investor or a business seeking funding, Raise
+                Africa is here to help you succeed.
               </p>
             </div>
           </div>
