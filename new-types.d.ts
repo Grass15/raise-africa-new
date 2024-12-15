@@ -1,30 +1,45 @@
+declare module "@tawk.to/tawk-messenger-react";
 type Campaign = {
-  id: number;
-  image: string;
-  creator: string;
-  startup: Startup;
+  _id?: string; // id in mongo db
+  id?: number;
+  creator?: string;
+  company: Company;
   raised: number;
   target: number;
-  deadline: number;
+  deadline: Date;
+  NFTAddress?: string;
+  creationDate: Date;
+  signature: string;
+  state: CampaignStatus;
 };
-type Startup = {
+
+type Company = {
+  name: string;
+  type: CompanyType;
+  acceleratorOrIncubator?: string; //Only for startup
   project: Project;
-  financialStatus: string;
-  stakeholders: Stakeholder[];
-  sharesToFundPercentage: number;
-  location: string;
-  socialNetwork: SocialNetwork[];
+  foundersVideo: string;
+  financialStatements?: string;
+  businessPlan: string;
+  founders: Founder[];
+  country: string;
+  description: string;
+  socialNetworks: SocialNetwork[];
+  creationDate: Date;
+  industry: string;
+  sector: string;
+  nft: NFT;
 };
 type Project = {
-  title: string;
-  description: string;
-  category: string;
-  need: string; //need description
-  innovation: string;
+  competitors: string;
+  description: string; // Does and aim to achieve
+  intendedUseOfFunds: string; //need description
+  innovation: string; //problem that the project solves and the solution
+  activeUsers: number;
   demo: string; // demo of the project
 };
 
-type Stakeholder = {
+type Founder = {
   firstName: string;
   lastName: string;
   role: string;
@@ -35,6 +50,33 @@ type SocialNetwork = {
   name: string;
   link: string;
 };
+enum NFTType {
+  Bond = "Bond",
+  Equity = "Equity",
+}
+enum CompanyType {
+  STARTUP = "Startup",
+  SE = "Small Enterprise",
+  ME = "Medium Enterprise",
+}
+
+type NFT = {
+  address?: string;
+  name: string;
+  type: NFTType;
+  price: number;
+  availableQuantity: number;
+  interest?: number; // annual interest (Only For bonds)
+  duration?: number; // in years (Only For bonds)
+};
+enum CampaignStatus {
+  Incomplete = "Incomplete",
+  Active = "Active",
+  Complete = "Complete",
+  Failed,
+  Funded,
+  Rejected,
+}
 
 type Proposition = {
   id: string;
@@ -59,6 +101,19 @@ type Voter = {
   wallet_address: string;
 };
 
+type EncryptedCampaign = {
+  _id: string;
+  id: number;
+  creator: string;
+  company: string; //Hashed data on pinata cloud
+  raised: number;
+  target: number;
+  deadline: number;
+  NFTAddress?: string;
+  signature: string;
+  state: CampaignStatus;
+};
+
 type Post = {
   id: string;
   reference_id: string;
@@ -80,4 +135,35 @@ type PostComment = {
   author: string;
   message: string;
   creation: number;
+};
+
+type CampaignInputs = {
+  _id?: string; //id in mongo db
+  companyName: string;
+  sector: string;
+  industry: string;
+  country: string;
+  companyCreationDate: Date;
+  companyType: CompanyType;
+  acceleratorOrIncubator?: string;
+  companyBriefDescription: string;
+  projectDescription: string;
+  projectInnovation: string;
+  competitors: string;
+  founders: Founder[];
+  foundersVideo: string;
+  businessPlan: string;
+  activeUsers: number;
+  demo: string;
+  financialStatements?: string;
+  targetedAmount: number;
+  nftType: NFTType;
+  nftUnitPrice: number;
+  bondInterest?: number;
+  bondDuration?: number;
+  projectNeed: string;
+  NFTInitials: string;
+  signature: string;
+  creationDate: Date;
+  campaignDeadline: Date;
 };

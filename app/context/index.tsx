@@ -1,19 +1,28 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useActiveAccount, useReadContract } from "thirdweb/react";
-import { prepareContractCall, sendTransaction } from "thirdweb";
-import { readContract } from "thirdweb";
-import { useSendTransaction } from "thirdweb/react";
-import { useDisconnect, useActiveWallet } from "thirdweb/react";
+import {
+  useActiveAccount,
+  useActiveWallet,
+  useDisconnect,
+  useReadContract,
+  useSendTransaction,
+} from "thirdweb/react";
+import {
+  prepareContractCall,
+  readContract,
+  sendAndConfirmTransaction,
+  sendTransaction,
+} from "thirdweb";
 import { toEther, toUnits } from "thirdweb/utils";
 import axios from "axios";
-import { decryptObject } from "../utils";
 import * as RAF from "./raf";
 import * as CROWDFUNDING from "./crowdfunding";
 import * as USDT from "./usdt";
 
 import { client } from "../constants";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { undefined } from "zod";
 
 const StateContext: React.Context<any> = createContext(client);
 
@@ -24,29 +33,17 @@ export const StateContextProvider = ({ children }) => {
   const wallet = useActiveWallet();
   const { disconnect } = useDisconnect();
   const { mutate: sendReactTransaction, isPending } = useSendTransaction();
-  const [currentCampaign, setCurrentCampaign] = useState({} as Campaign);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [currentProposition, setCurrentProposition] = useState(
     {} as Proposition,
   );
+  const router = useRouter();
   //const BACKEND_URL = "http://127.0.0.1:5000";
   const BACKEND_URL = "https://raiseafrica.finance/flask";
   const [campaignsFilteredCategories, setCampaignsFilteredCategories] =
     useState<string[]>([]);
   const [propositionsFilteredCategories, setPropositionsFilteredCategories] =
     useState<string[]>([]);
-  const [currentPost, setCurrentPost] = useState({} as Post);
-  useEffect(() => {
-    const campaign = localStorage.getItem("selectedCampaign");
-    //const proposition = localStorage.getItem("selectedProposition");
-    const post = localStorage.getItem("selectedPost");
-    if (campaign) {
-      setCurrentCampaign(JSON.parse(campaign));
-    }
-
-    if (post) {
-      setCurrentPost(JSON.parse(post));
-    }
-  }, [campaignsFilteredCategories, propositionsFilteredCategories]);
 
   let { data: balanceData, isLoading: isBalanceDataLoading } = useReadContract({
     contract: RAF.contract,
@@ -85,34 +82,55 @@ export const StateContextProvider = ({ children }) => {
       ? Number(toEther(usdtBalanceData as bigint))
       : 0;
 
-  const createCampaign = async (
-    _target: string,
-    _deadline: string,
-    _image: string,
-    _startup: string,
+  const createOnBlockchain = async (
+    _target: number,
+    _deadline: number,
+    _company: string,
   ) => {
     if (account) {
       try {
         const transaction = prepareContractCall({
           contract: CROWDFUNDING.contract,
           method:
-            "function createCampaign(address _creator, uint256 _target, uint256 _deadline, string _image, string _startup) returns (uint256)",
+            "function createCampaign(address _creator, uint256 _target, uint256 _deadline, string _company) returns (uint256)",
           params: [
             account.address,
-            toUnits(_target, 18),
-            toUnits(_deadline, 18),
-            _image,
-            _startup,
+            toUnits(_target.toString(), 18),
+            toUnits(_deadline.toString(), 18),
+            _company,
           ],
         });
-        const { transactionHash } = await sendTransaction({
+        const receipt = await sendAndConfirmTransaction({
           transaction,
           account,
         });
+        return receipt;
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const createCampaign = async (_campaign: Campaign) => {
+    await createOnBlockchain(
+      _campaign.target,
+      new Date(_campaign.deadline).getTime(),
+      "test_string",
+    );
+    const id = await readContract({
+      contract: CROWDFUNDING.contract,
+      method: "function numberOfCampaigns() view returns (uint256)",
+      params: [],
+    });
+    _campaign.id = Number(id) - 1;
+
+    await saveCampaign(_campaign);
+  };
+
+  const saveCampaign = async (_campaign: Campaign) => {
+    _campaign.creator = account ? account.address : "";
+
+    await axios.post(`${BACKEND_URL}/campaigns/save`, _campaign);
   };
 
   const createProposition = async (proposition: Proposition) => {
@@ -146,6 +164,7 @@ export const StateContextProvider = ({ children }) => {
           {
             position: "top-center",
             theme: "dark",
+            onClose: () => router.push("/"),
           },
         );
       })
@@ -154,6 +173,23 @@ export const StateContextProvider = ({ children }) => {
           console.log(error.response);
         }
       });
+  };
+
+  const getUserSavedCampaign = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/campaigns/saved`, {
+        params: {
+          creator: account ? account.address : "",
+        },
+      });
+      if (response.status == 200) {
+        return response.data;
+      } else {
+        return undefined;
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getPropositionTypes = async () => {
@@ -361,18 +397,10 @@ export const StateContextProvider = ({ children }) => {
           contract: USDT.contract,
           method:
             "function approve(address spender, uint256 amount) external returns (bool)",
-          params: [account.address, toUnits(usdtAmount.toString(), 18)],
+          params: [RAF.BUY_RAF_ADDRESS, toUnits(usdtAmount.toString(), 18)],
         });
 
-        const usdtAllowanceData = await readContract({
-          contract: USDT.contract,
-          method:
-            "function allowance(address owner, address spender) view returns (uint256)",
-          params: [account.address, RAF.BUY_RAF_ADDRESS],
-        });
-        console.log("USDT ALLOWANCE:", usdtAllowanceData);
-        //sendTransaction(approveTransaction);
-        const { transactionHash } = await sendTransaction({
+        const { transactionHash } = await sendAndConfirmTransaction({
           transaction: approveTransaction,
           account,
         });
@@ -384,17 +412,23 @@ export const StateContextProvider = ({ children }) => {
 
   const buyRaf = async (usdtAmount: number, rafAmount: number) => {
     if (account) {
-      try {
-        await allowUsdtSpending(usdtAmount);
-        const contract = RAF.buyContract();
-        if (contract) {
-          await contract.buyRAFWithUSDT(
-            toUnits(usdtAmount.toString(), 18),
-            toUnits(rafAmount.toString(), 18),
-          );
-        }
-      } catch (error) {
-        console.log((error as Error).cause);
+      await allowUsdtSpending(usdtAmount);
+      const contract = RAF.buyContract();
+      const allowance = await readContract({
+        contract: USDT.contract,
+        method:
+          "function allowance(address owner, address spender) view returns (uint256)",
+        params: [account.address, RAF.BUY_RAF_ADDRESS],
+      });
+      if (
+        contract &&
+        allowance &&
+        allowance >= toUnits(usdtAmount.toString(), 18)
+      ) {
+        await contract.buyRAFWithUSDT(
+          toUnits(usdtAmount.toString(), 18),
+          toUnits(rafAmount.toString(), 18),
+        );
       }
     }
   };
@@ -407,53 +441,58 @@ export const StateContextProvider = ({ children }) => {
       params: [],
     });
 
-  const getCampaigns = () => {
-    const campaigns: Campaign[] = [];
-    if (!isCampaignListLoading && campaignList != null) {
-      campaignList.map((campaignItem, index) => {
-        const startup: Startup = decryptObject(campaignItem.startup) as Startup;
-
-        const campaign: Campaign = {
-          creator: campaignItem.creator,
-          id: index,
-          image: "https://picsum.photos/id/14/2500/1667",
-          startup: startup,
-          target: Number(toEther(campaignItem.target)),
-          raised: Number(toEther(campaignItem.amountCollected)),
-          deadline: Number(toEther(campaignItem.deadline)),
-        };
-        console.log("Campaigns filter: ", campaignsFilteredCategories);
-        if (
-          campaignsFilteredCategories.length == 0 ||
-          campaignsFilteredCategories.includes(startup.project.category)
-        ) {
-          campaigns.push(campaign);
-        }
-      });
+  const getActiveCampaigns = async () => {
+    const response = await axios.get(`${BACKEND_URL}/campaigns`);
+    if (response) {
+      return response.data as Campaign[];
     }
-    return campaigns;
   };
 
-  const { data: donorsData, isLoading: isDonorsDataLoading } = useReadContract({
-    contract: CROWDFUNDING.contract,
-    method:
-      "function getDonors(uint256 _id) view returns (address[], uint256[])",
-    params: [toUnits((currentCampaign.id || 0).toString(), 18)],
-  });
-
-  const donors = () => {
-    const parsedDonors = [];
-    if (!isDonorsDataLoading && donorsData != null) {
-      const numberOfDonations = donorsData[0].length;
-
-      for (let i = 0; i < numberOfDonations; i++) {
-        parsedDonors.push({
-          donor: donorsData[0][i],
-          donation: toEther(donorsData[1][i]),
-        });
-      }
+  const getCampaign = async (_id: string) => {
+    const response = await axios.get(`${BACKEND_URL}/campaigns`, {
+      params: {
+        _id: _id,
+      },
+    });
+    if (response) {
+      console.log("test");
+      return response.data;
     }
-    return parsedDonors;
+  };
+  const getUserCampaigns = async (user: string) => {
+    const response = await axios.get(`${BACKEND_URL}/campaigns`, {
+      params: {
+        user: user,
+      },
+    });
+    if (response) {
+      console.log("test");
+      return response.data;
+    }
+  };
+
+  const getDonors = async (_id: number) => {
+    return await readContract({
+      contract: CROWDFUNDING.contract,
+      method:
+        "function getDonors(uint256 _id) view returns (address[], uint256[])",
+      params: [toUnits(_id.toString(), 18)],
+    });
+  };
+
+  const invest = async (_id: number, amount: number) => {
+    if (account) {
+      await allowUsdtSpending(amount + 1);
+      const transaction = prepareContractCall({
+        contract: CROWDFUNDING.contract,
+        method: "function donateToCampaign(uint256 _id) payable",
+        params: [toUnits(_id.toString(), 18)],
+      });
+      const { transactionHash } = await sendAndConfirmTransaction({
+        transaction,
+        account,
+      });
+    }
   };
 
   return (
@@ -467,12 +506,14 @@ export const StateContextProvider = ({ children }) => {
         disconnect,
         isConnected,
         createCampaign,
-        getCampaigns,
+        getActiveCampaigns,
+        getUserCampaigns,
+        campaigns,
+        saveCampaign,
+        getUserSavedCampaign,
+        getCampaign,
+        getDonors,
         addToWaitingList,
-        currentCampaign,
-        currentProposition,
-        currentPost,
-        donors,
         rafPrice,
         buyRaf,
         campaignsFilteredCategories,

@@ -1,4 +1,8 @@
-const ProjectDescription = ({ subtitle = "", description = "" }) => {
+const ProjectDescription = ({
+  subtitle = "",
+  description = "",
+  inline = false,
+}) => {
   return (
     <div className={"flex flex-col items-center w-96"}>
       <h4

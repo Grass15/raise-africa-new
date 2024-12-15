@@ -12,5 +12,5 @@ export const contract = getContract({
   // the chain the contract is deployed on
   chain: sepolia,
   // the contract's address
-  address: "0x6208C686A77e9fa527c4eCbF974c4BCB6a7e9F16",
+  address: "0x6f7dC6674c31Ed430B4Eb6b517CEb9a51b14A1bD",
 });

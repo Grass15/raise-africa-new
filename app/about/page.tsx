@@ -1,114 +1,132 @@
-import FormField from "../components/FormField";
-
 const AboutPage = () => {
   return (
-    <section className={"flex flex-col gap-6 px-5 py-5 w-full "}>
-      <div className="w-full max-[806px]:max-w-[458px] max-w-screen-md xl:max-w-screen-lg  pt-5 mx-auto sm:py-5 ">
-        <div
-          className={
-            "rounded bg-[#222221] flex justify-center items-center flex-col sm:p-10 p-4"
-          }
-        >
-          <div
-            className={
-              "flex justify-center items-center bg-secondary p-4 rounded sm:min-w-[380px]"
-            }
-          >
-            <h1 className={"sm:text-xl text-primary  font-medium"}>
+    <section className="flex flex-col gap-6 px-5 py-5 w-full">
+      <div className="w-full max-[806px]:max-w-[458px] max-w-screen-md xl:max-w-screen-lg pt-5 mx-auto sm:py-5">
+        <div className="rounded bg-[#222221] flex justify-center items-center flex-col sm:p-10 p-4">
+          <div className="flex justify-center items-center bg-secondary p-4 rounded sm:min-w-[380px]">
+            <h1 className="sm:text-xl text-primary font-medium">
               About Raise Africa
             </h1>
           </div>
-          <div className={"w-full lg:w-10/12 flex flex-col mt-5 gap-10"}>
-            <div>
-              <h4 className={"text-primary font-semibold"}>Our Mission</h4>
-              <p>
-                Raise Africa is dedicated to revolutionizing the funding
-                landscape for African businesses, enabling any company, startup
-                or not, to raise capital via blockchain. We aim to create an
-                inclusive ecosystem that supports innovation across various
-                sectors, including education, healthcare, and more.
-              </p>
-            </div>
-            <div>
-              <h4 className={"text-primary font-semibold"}>Our Vision</h4>
-              <p>
-                We envision a future where businesses across Africa can secure
-                funds to drive sustainable development, supported by a global
-                network of investors.
-              </p>
-            </div>
-            <div>
-              <h4 className={"text-primary font-semibold"}>Our Story</h4>
-              <p>
-                Originally a platform for blockchain startups, we have now
-                pivoted to become a crowdfunding platform, allowing all African
-                businesses to raise funds.
-              </p>
-            </div>
-            <div>
-              <h4 className={"text-primary font-semibold"}>What we do</h4>
-              <p>
-                Raise Africa offers a seamless platform where companies can
-                raise funds and investors can support ventures in line with
-                their values. Our offerings include:
-              </p>
-              <ul className={"flex flex-col gap-5"}>
-                <li>
-                  <p>
-                    <span className={"text-primary"}>
-                      Access to Companies:{" "}
-                    </span>
-                    Discover and invest in a wide variety of businesses.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <span className={"text-primary"}>
-                      Access to Investors:{" "}
-                    </span>
-                    Connect with global investors eager to support impactful
-                    ventures.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <span className={"text-primary"}>
-                      Affordable Solutions:{" "}
-                    </span>
-                    Transparent, low-cost crowdfunding services
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <span className={"text-primary"}>
-                      Efficient Disbursement:{" "}
-                    </span>
-                    Ensuring timely and secure distribution of funds.
-                  </p>
-                </li>
+
+          <div className="w-full lg:w-10/12 flex flex-col mt-5 gap-10">
+            <Section title="Our Story">
+              Raise Africa was created to empower African entrepreneurs and
+              revolutionize the financial landscape of the continent. We
+              recognized the immense potential and innovation in African
+              startups and SMEs, and sought to bridge the gap between these
+              businesses and global investors. Through decentralized finance
+              (DeFi) and blockchain technology, Raise Africa provides a
+              transparent, secure, and efficient solution for raising capital.
+            </Section>
+
+            <Section title="Our Vision">
+              To be the leading decentralized crowdfunding platform that enables
+              African startups and SMEs to achieve sustainable growth by
+              accessing global investment seamlessly.To be the leading
+              decentralized crowdfunding platform that enables African startups
+              and SMEs to achieve sustainable growth by accessing global
+              investment seamlessly.
+            </Section>
+            <Section title="Our Mission">
+              We aim to democratize access to capital for African entrepreneurs
+              using decentralized finance and blockchain technology. Our mission
+              is to provide transparent, efficient, and secure investment
+              opportunities that foster innovation and drive economic growth
+              across Africa.
+            </Section>
+
+            <Section title="What We Do">
+              Raise Africa facilitates the fundraising process for African
+              startups and SMEs by enabling them to issue token equity or token
+              bonds. Our platform connects these businesses with a global
+              network of investors, providing a streamlined and efficient way to
+              raise capital. Our unique liquidity pool mechanism ensures that
+              token equity remains liquid and tradable, offering stability and
+              confidence to investors.
+            </Section>
+
+            <Section title="Our Team">
+              <ul className="flex flex-col gap-5">
+                {[
+                  {
+                    label: "Access to Companies",
+                    text: "Discover and invest in a wide variety of businesses.",
+                  },
+                  {
+                    label: "Access to Investors",
+                    text: "Connect with global investors eager to support impactful ventures.",
+                  },
+                  {
+                    label: "Affordable Solutions",
+                    text: "Transparent, low-cost crowdfunding services.",
+                  },
+                  {
+                    label: "Efficient Disbursement",
+                    text: "Ensuring timely and secure distribution of funds.",
+                  },
+                ].map((item, index) => (
+                  <li key={index}>
+                    <p>
+                      <span className="text-primary">{item.label}: </span>
+                      {item.text}
+                    </p>
+                  </li>
+                ))}
               </ul>
-            </div>
-            <div>
-              <h4 className={"text-primary font-semibold"}>Our Team</h4>
-              <p>
-                Our team consists of experts in finance, technology, and
-                business development, focused on empowering African companies.
-              </p>
-            </div>
-            <div>
-              <h4 className={"text-primary font-semibold"}>Join Us</h4>
-              <p>
-                Be part of our mission to create impactful investment
-                opportunities that foster Africa&apos;s development. Whether
-                you&apos;re an investor or a business seeking funding, Raise
-                Africa is here to help you succeed.
-              </p>
-            </div>
+              <ul className="flex flex-col gap-5">
+                {[
+                  {
+                    label: "Marcel Eboa: ",
+                    text: "Co-founder & CEO",
+                  },
+                  {
+                    label: "Fabien Korgo: ",
+                    text: "Co-founder & CTO",
+                  },
+                  {
+                    label: "Supervisory Board and Advisors",
+                    text: "",
+                  },
+                ].map((item, index) => (
+                  <li key={index}>
+                    <p>
+                      <span className="text-primary">{item.label} </span>
+                      {item.text}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </Section>
+
+            <Section title="Join Us">
+              At Raise Africa, we are committed to creating a brighter future
+              for African entrepreneurship. By joining our platform, you become
+              part of a movement transforming the way businesses raise funds and
+              driving sustainable economic growth across the continent. <br />
+              <span className={"text-primary"}>
+                Invest in the future of Africa. Join Raise Africa today.
+              </span>
+              <br />
+              For more information, visit our website or contact us at
+              support@raiseafrica.finance.
+            </Section>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+const Section = ({
+  title = "",
+  //@ts-ignore
+  children,
+}) => (
+  <div>
+    <h4 className="text-primary font-semibold">{title}</h4>
+    <p>{children}</p>
+  </div>
+);
 
 export default AboutPage;

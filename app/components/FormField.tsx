@@ -21,6 +21,8 @@ const FormField = forwardRef(
       error = "",
       //@ts-ignore
       handleChange = (...args: any[]) => {},
+      //@ts-ignore
+      accept = "",
       ...props
     },
     ref,
@@ -45,7 +47,7 @@ const FormField = forwardRef(
             //@ts-ignore
             ref={ref}
             {...props}
-            className="select select-bordered select-primary rounded focus:border-none text-white"
+            className="select w-full min-w-[100px] sm:min-w-[300px] select-bordered select-primary rounded focus:border-none text-white"
           >
             <option disabled>Pick one</option>
             {options.map((option: any) => (
@@ -54,16 +56,27 @@ const FormField = forwardRef(
               </option>
             ))}
           </select>
+        ) : inputType == "file" ? (
+          <input
+            type={inputType}
+            placeholder={placeholder}
+            accept={accept}
+            className={
+              "file-input file-input-bordered file-input-primary w-full min-w-[100px] sm:min-w-[300px] rounded"
+            }
+            // onChange={handleChange}
+            //@ts-ignore
+            ref={ref}
+            {...props}
+          />
         ) : (
           <input
             type={inputType}
             placeholder={placeholder}
             className={
-              inputType == "file"
-                ? "file-input file-input-bordered file-input-primary w-full min-w-[100px] sm:min-w-[300px] rounded"
-                : "input input-bordered input-primary min-w-[100px] sm:min-w-[300px] w-full rounded focus:border-none text-white"
+              "input input-bordered input-primary min-w-[100px] sm:min-w-[300px] w-full rounded focus:border-none text-white"
             }
-            onChange={handleChange}
+            // onChange={handleChange}
             //@ts-ignore
             ref={ref}
             {...props}

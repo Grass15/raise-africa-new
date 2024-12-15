@@ -8,19 +8,18 @@ import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
   const { isConnected, account, getUserPropositions } = useStateContext();
-  const { getCampaigns } = useStateContext();
-  const campaigns: Campaign[] = getCampaigns();
+  const { getUserCampaigns } = useStateContext();
 
   const [propositions, setPropositions] = useState<Proposition[]>([]);
+  const [campaigns, setCampaigns] = useState<Proposition[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const propositions = await getUserPropositions();
-        setPropositions(propositions);
-        console.log(propositions);
+        const campaigns = await getUserCampaigns(account.address);
+        setCampaigns(campaigns);
       } catch (err) {
-        console.log("Error occured when fetching Propostions");
+        console.log(err);
       }
     })();
   }, []);
@@ -55,6 +54,7 @@ const ProfilePage = () => {
                 role="tab"
                 className="tab "
                 aria-label="Campaigns"
+                defaultChecked
               />
               <div
                 role="tabpanel"
@@ -77,7 +77,6 @@ const ProfilePage = () => {
                 role="tab"
                 className="tab "
                 aria-label="Propositions "
-                defaultChecked
               />
               <div
                 role="tabpanel"

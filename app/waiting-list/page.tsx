@@ -1,12 +1,14 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useForm, SubmitHandler } from "react-hook-form";
-import FormField from "../components/FormField";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Modal from "../components/Modal";
-import SocialNetwork from "../components/SocialNetwork";
-import { startupCategories } from "../constants";
 import { useStateContext } from "../context";
+import FormField from "../components/FormField";
+const Modal = dynamic(() => import("../components/Modal"), { ssr: false });
+const SocialNetwork = dynamic(() => import("../components/SocialNetwork"), {
+  ssr: false,
+});
 
 type Inputs = {
   companyName: string;
@@ -33,59 +35,11 @@ const WaitingListPage = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const [isLoading, setIsLoading] = useState(false);
-  const [countries, setCountries] = useState<string[]>([]);
   const [socialNetworks, setSocialNetworks] = useState([] as SocialNetwork[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const { addToWaitingList } = useStateContext();
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch("https://restcountries.com/v3.1/all");
-        const data = await response.json();
-        const africanCountries = data
-          .filter((country: any) => country.region === "Africa")
-          .map((country: any) => country.name.common)
-          .sort();
-        setCountries(africanCountries);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
-  const submitData = async (formData: Inputs) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:5000/projects/waiting-list",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      setModalMessage(result.message); // Set success message from response
-      setIsModalOpen(true); // Open the modal
-    } catch (error) {
-      console.error("Error submitting data:", error);
-      setModalMessage("Failed to submit data. Please try again."); // Set error message
-      setIsModalOpen(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { CountriesOptions } = useStateContext();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const business = {
@@ -104,7 +58,7 @@ const WaitingListPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false); // Close the modal
-    // router.push("/thank-you"); // Optionally navigate after closing
+    router.push("/"); // Optionally navigate after closing
   };
 
   const handleSocialNetworksUpdate = (socialNetwork: SocialNetwork) => {
@@ -122,16 +76,6 @@ const WaitingListPage = () => {
     }
   };
 
-  const CountriesOptions: { key: number; value: string; text: string }[] = [];
-  countries.forEach((country) => {
-    const option = {
-      key: CountriesOptions.length,
-      value: country.toLowerCase(),
-      text: country,
-    };
-    CountriesOptions.push(option);
-  });
-
   return (
     <section className={"flex flex-col gap-4 px-5 py-5 w-full "}>
       <div className="w-full max-[806px]:max-w-[458px] max-w-screen-md xl:max-w-screen-lg pt-5 mx-auto sm:py-5">
@@ -146,7 +90,7 @@ const WaitingListPage = () => {
             }
           >
             <h4 className={"text-white text-sm"}>
-              Opening Date for Campaigns: December 1st
+              Opening Date for Campaigns: December
             </h4>
             <h1 className={"sm:text-xl text-primary font-medium"}>
               Get Ready to Launch Your Fundraising Campaign with Raise Africa
@@ -164,6 +108,7 @@ const WaitingListPage = () => {
           >
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Company Name *"}
                 placeholder={"Enter your company name"}
@@ -175,6 +120,7 @@ const WaitingListPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Industry/Sector *"}
                 placeholder={"e.g., healthcare, technology"}
@@ -185,6 +131,7 @@ const WaitingListPage = () => {
               />
             </div>
             <FormField
+              //@ts-ignore
               isSelect={true}
               labelName={"Country of Operation *"}
               options={CountriesOptions}
@@ -195,6 +142,7 @@ const WaitingListPage = () => {
             />
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Contact First Name *"}
                 placeholder={"Enter first name"}
@@ -209,6 +157,7 @@ const WaitingListPage = () => {
               />
 
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Contact Last Name *"}
                 placeholder={"Enter last name"}
@@ -223,6 +172,7 @@ const WaitingListPage = () => {
               />
 
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Contact Position *"}
                 placeholder={"Enter your position"}
@@ -236,6 +186,7 @@ const WaitingListPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"email"}
                 labelName={"Contact Email *"}
                 placeholder={"Enter your email"}
@@ -247,6 +198,7 @@ const WaitingListPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"tel"}
                 labelName={"Contact Phone Number *"}
                 placeholder={"Enter your phone number"}
@@ -275,6 +227,7 @@ const WaitingListPage = () => {
               />
             </div>
             <FormField
+              //@ts-ignore
               isTextArea={true}
               labelName={"Brief Description of Your Business *"}
               placeholder={"Enter a brief description"}
@@ -289,9 +242,10 @@ const WaitingListPage = () => {
             />
             <div className={"w-full flex flex-wrap gap-8"}>
               <FormField
+                //@ts-ignore
                 inputType={"number"}
                 labelName={"Fundraising Goal *"}
-                placeholder={"Amount and currency"}
+                placeholder={"Amount in $"}
                 error={
                   errors.fundraisingGoal
                     ? errors.fundraisingGoal.message
@@ -302,6 +256,7 @@ const WaitingListPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Planned Use of Funds *"}
                 placeholder={"e.g., expansion, research, operations"}
@@ -313,6 +268,7 @@ const WaitingListPage = () => {
                 })}
               />
               <FormField
+                //@ts-ignore
                 inputType={"text"}
                 labelName={"Are You Familiar with Blockchain Technology? *"}
                 placeholder={"Yes/No"}
@@ -327,6 +283,7 @@ const WaitingListPage = () => {
               />
             </div>
             <FormField
+              //@ts-ignore
               isTextArea={true}
               labelName={"Additional Information or Questions"}
               placeholder={"Enter any additional info or questions"}

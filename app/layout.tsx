@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { StateContextProvider } from "./context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { TawkMessengerReact } from "./components/Tawk";
 
 export default function RootLayout({
   children,

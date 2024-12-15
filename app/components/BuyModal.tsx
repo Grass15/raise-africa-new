@@ -8,12 +8,14 @@ import { useState } from "react";
 import usdtLogo from "../../public/images/tether-usdt-logo.png";
 import { useStateContext } from "../context";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const BuyModal = ({ text = "" }) => {
   const { rafBalance, isConnected, usdtBalance, rafPrice, buyRaf } =
     useStateContext();
   const [usdtAmount, setUsdtAmount] = useState(0);
   const [rafAmount, setRafAmount] = useState(0);
+  const [isLoading, setIsloading] = useState(false);
   //@ts-ignore
   const handleUsdtInput = (e) => {
     const inputValue = e.target.value;
@@ -30,9 +32,26 @@ const BuyModal = ({ text = "" }) => {
       setUsdtAmount(Number((inputValue * rafPrice).toFixed(4)) + 1);
     }
   };
-  const buy = () => {
+  const buy = async () => {
     if (isConnected) {
-      buyRaf(usdtAmount, rafAmount);
+      try {
+        setIsloading(true);
+        await buyRaf(usdtAmount, rafAmount);
+        setIsloading(false);
+        toast.success("Transaction succeed.", {
+          position: "top-center",
+          theme: "dark",
+        });
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          "There was an issue while making the transaction. Try again please",
+          {
+            position: "top-center",
+            theme: "dark",
+          },
+        );
+      }
     } else {
       toast.error("Please Connect Your wallet first!", {
         position: "top-center",
@@ -45,6 +64,7 @@ const BuyModal = ({ text = "" }) => {
       <label htmlFor="raf_buying_modal">
         <ButtonBuy simple={false} text={text} />
       </label>
+      {isLoading && <Loader />}
       <input type="checkbox" id="raf_buying_modal" className="modal-toggle" />
       <div className="modal " role="dialog">
         <div className="modal-box rounded-xl border border-primary px-3 w-auto items-center min-w-52">

@@ -18,7 +18,7 @@ const Footer = () => {
         </Link>
         <p className="text-sm text-[#CFCFCF] w-64 ml-3">
           Join us in revolutionizing the way African businesses are funded.
-          Let`&apos;`s create a sustainable future Together.
+          Let&apos;s create a sustainable future Together.
         </p>
         <div className={"flex flex-row gap-4 ml-3"}>
           <Link href={"https://t.me/raise_africa"} target={"_blank"}>
@@ -82,7 +82,8 @@ const Footer = () => {
       <nav className={"flex flex-col items-center align-middle"}>
         <Link
           className={"btn btn-primary mt-16"}
-          href="/WHITEPAPER_EN-V3.pdf"
+          href="/WHITEPAPER_EN-V4.pdf"
+          target={"_blank"}
           download="RAISE_AFRICA_WHITEPAPER.pdf" // Replace with the name you want the file to be downloaded as
         >
           Whitepaper

@@ -1,10 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CampaignCard from "./CampaignCard";
 import { useStateContext } from "../context";
+import Link from "next/link";
+import { destructCampaign } from "../utils";
 const CampaignsList = () => {
-  const { getCampaigns } = useStateContext();
-  const campaigns: Campaign[] = getCampaigns();
+  const { getActiveCampaigns } = useStateContext();
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const campaigns: Campaign[] = await getActiveCampaigns();
+        setCampaigns(campaigns);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchCampaigns();
+  }, [getActiveCampaigns]);
 
   return (
     <div
