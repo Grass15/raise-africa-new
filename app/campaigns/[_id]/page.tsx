@@ -20,7 +20,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
   const [campaign, setCampaign] = useState<Campaign>();
   const [donors, setDonors] = useState<string[]>([]);
   const [remainingDays, setRemainingDays] = useState<string>("");
-  const [investedAmount, setInvestedAmount] = useState(0);
+  const [investedAmount, setInvestedAmount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -49,7 +49,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
       try {
         if (campaign) {
           const _campaign = campaign;
-          _campaign.raised += investedAmount;
+          _campaign.raised = Number(_campaign.raised) + Number(investedAmount);
           await invest(campaign.id, investedAmount, _campaign);
           setIsLoading(false);
           toast.success("You have successfully invested in this project", {
@@ -58,6 +58,11 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
           });
         }
       } catch (error) {
+        setIsLoading(false);
+        toast.error("Something went wrong!", {
+          position: "top-center",
+          theme: "dark",
+        });
         console.log(error);
       }
     } else {
@@ -74,7 +79,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
 
   //@ts-ignore
   const handleInvestment = (e) => {
-    setInvestedAmount(e.target.value);
+    setInvestedAmount(Number(e.target.value));
   };
   return (
     <>
@@ -337,7 +342,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
                 </h5>
                 <div className={"flex flex-row gap-5"}>
                   <input
-                    type="text"
+                    type="number"
                     placeholder=""
                     className={
                       "input input-bordered input-primary w-[180px]  rounded focus:border-none text-white"

@@ -493,8 +493,9 @@ export const StateContextProvider = ({ children }) => {
 
   const invest = async (_id: number, amount: number, _campaign: Campaign) => {
     if (account) {
+      amount = amount + 1;
       await allowUsdtSpending(
-        amount + 1,
+        amount,
         "0x713a8d9528996cD5bB6208d38Eb0715386190108",
         TUSDT.contract,
       );
@@ -502,17 +503,14 @@ export const StateContextProvider = ({ children }) => {
         contract: CROWDFUNDING.contract,
         method:
           "function donateToCampaign(uint256 _id, uint256 amount) payable",
-        params: [
-          toUnits(_id.toString(), 18),
-          toUnits((amount + 1).toString(), 18),
-        ],
+        params: [toUnits(_id.toString(), 18), toUnits(amount.toString(), 18)],
       });
       const { transactionHash } = await sendAndConfirmTransaction({
         transaction,
         account,
       });
       console.log(_campaign);
-      await axios.post(`${BACKEND_URL}/campaigns-data/save`, _campaign);
+      await axios.post(`${BACKEND_URL}/campaigns-data/update`, _campaign);
     }
   };
 
