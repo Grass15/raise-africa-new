@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import CampaignCard from "./CampaignCard";
 import { useStateContext } from "../context";
-import Link from "next/link";
-import { destructCampaign } from "../utils";
+
 const CampaignsList = () => {
   const { getActiveCampaigns } = useStateContext();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -13,7 +12,6 @@ const CampaignsList = () => {
         const campaigns: Campaign[] = await getActiveCampaigns();
         console.log("Fetched campaigns:", campaigns);
         setCampaigns(Array.isArray(campaigns) ? campaigns : []);
-        //setCampaigns(campaigns);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -11,18 +11,19 @@ const ProfilePage = () => {
   const { getUserCampaigns } = useStateContext();
 
   const [propositions, setPropositions] = useState<Proposition[]>([]);
-  const [campaigns, setCampaigns] = useState<Proposition[]>([]);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
         const campaigns = await getUserCampaigns(account.address);
-        setCampaigns(campaigns);
+        console.log("Fetched campaigns:", campaigns);
+        setCampaigns(Array.isArray(campaigns) ? campaigns : []);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, []);
+  }, [getUserCampaigns]);
 
   return (
     <section className={"flex flex-col gap-6 px-5 py-5 w-full "}>

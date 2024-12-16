@@ -454,6 +454,7 @@ export const StateContextProvider = ({ children }) => {
   const getActiveCampaigns = async () => {
     const response = await axios.get(`${BACKEND_URL}/campaigns`);
     if (response) {
+      console.log("Active campaigns: ", response.data);
       return response.data as Campaign[];
     }
   };
