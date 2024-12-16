@@ -13,6 +13,10 @@ export const calculatePercentage = (amount: number, goal: number) => {
   return (goal / amount) * 100;
 };
 
+export const numberOfShares = (unitPrice: number, goal: number) => {
+  return goal / unitPrice;
+};
+
 export { encryptObject } from "./crypto";
 export { decryptObject } from "./crypto";
 

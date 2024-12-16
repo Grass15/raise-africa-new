@@ -24,8 +24,30 @@ const FAQPage = () => {
             </p>
           </div>
 
-          <div className="join join-vertical w-full">
-            {faqData.map((faq, index) => (
+          <div className="join join-vertical w-full my-4">
+            <h4 className={"text-lg text-primary font-medium my-2"}>
+              For SMEs
+            </h4>
+            {faqDataForSME.map((faq, index) => (
+              <div
+                key={index}
+                className="collapse collapse-arrow join-item border-base-300 border"
+              >
+                <input type="radio" name="my-accordion-4" />
+                <div className="text-primary collapse-title text-lg font-medium">
+                  {faq.question}
+                </div>
+                <div className="collapse-content">
+                  <p>{faq.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="join join-vertical w-full my-4">
+            <h4 className={"text-lg text-primary font-medium my-2"}>
+              For Investors
+            </h4>
+            {faqDataForInvestors.map((faq, index) => (
               <div
                 key={index}
                 className="collapse collapse-arrow join-item border-base-300 border"
@@ -46,7 +68,7 @@ const FAQPage = () => {
   );
 };
 
-const faqData = [
+const faqDataForSME = [
   {
     question: "What is Raise Africa?",
     answer:
@@ -55,104 +77,168 @@ const faqData = [
   {
     question: "How does Raise Africa work?",
     answer:
-      "Raise Africa allows African startups and SMEs to create fundraising campaigns on the platform by issuing token equity or token bonds. Investors can purchase these tokens using USDT, representing a stake in the company or a debt obligation.",
+      "Raise Africa uses blockchain technology to enable African businesses to raise funds by issuing tokens (either equity or bonds). Investors from around the world can purchase these tokens, providing the necessary capital for growth and development.",
   },
   {
-    question: "What makes Raise Africa unique?",
+    question: "Who can raise funds on Raise Africa?",
     answer:
-      "Raise Africa integrates DeFi principles with traditional fundraising methods, offering a liquidity pool mechanism for token swaps. This ensures liquidity and stability while guaranteeing a maximum of 6 months for raising funds or a refund of service fees.",
+      "Any African startup or SME looking to raise capital for growth and development can apply to raise funds on Raise Africa. The business must comply with local regulations and provide necessary documentation.",
   },
   {
-    question: "What are the benefits for startups and SMEs using Raise Africa?",
+    question: "What types of funding can I raise on Raise Africa?",
     answer:
-      "Benefits include access to global investors, a 20% liquidity pool for token stability, lower service fees for partner-backed companies, automated token pricing through smart contracts, and expert guidance.",
+      "You can raise funds through token equity (shares) or token bonds (loans). Token equity involves selling a portion of your company's ownership, while token bonds involve issuing debt that must be repaid with interest.",
   },
   {
-    question:
-      "How can African startups and SMEs apply to raise funds on Raise Africa?",
+    question: "How do I get started with Raise Africa?",
     answer:
-      "Companies can apply by filling out the campaign form on the Raise Africa website. After review and approval, they can begin raising funds on the platform.",
+      "Connect your Web3 wallet, submit your project with detailed business information, choose the type of funding (equity or bonds), set your financial goals, submit your campaign for approval, attract investors, receive funds in fiat currency (USDT), and create a 20% liquidity reserve.",
   },
   {
     question:
       "What are the fees associated with raising funds on Raise Africa?",
     answer:
-      "Raise Africa charges a standard service fee of 3% of the funds raised. Companies recommended by partner accelerators and incubators benefit from a reduced fee of 2%.",
+      "Raise Africa charges a 3% commission on the total funds raised through the platform.",
   },
   {
-    question: "What is the liquidity pool, and why is it important?",
+    question: "How long does it take to raise funds on Raise Africa?",
     answer:
-      "The liquidity pool represents 20% of the funds raised and ensures sufficient liquidity for investors wishing to swap token equity for USDT. It supports token stability and facilitates investor exits.",
+      "The duration of the fundraising campaign depends on various factors, including the amount sought and investor interest. If the target is not reached within six months, Raise Africa refunds its service fees.",
   },
   {
-    question: "How is the token value determined?",
+    question: "What is the 20% liquidity reserve?",
     answer:
-      "The token value is determined by a smart contract based on supply and demand in the liquidity pool. As token supply decreases, its price increases, and vice versa.",
-  },
-  {
-    question: "What types of tokens can be issued on Raise Africa?",
-    answer:
-      "Two types of tokens can be issued: Token Equity, representing company ownership and swappable for USDT, and Token Bonds, representing a debt obligation with annual interest payments.",
+      "The 20% liquidity reserve ensures that investors can swap their equity tokens for USDT at any time or receive repayments if they hold token bonds.",
   },
   {
     question: "How secure is Raise Africa?",
     answer:
-      "Raise Africa uses blockchain technology and smart contracts to ensure transparency, security, and automated processes, minimizing fraud risks and ensuring platform integrity.",
-  },
-  {
-    question: "What are the risks associated with investing on Raise Africa?",
-    answer:
-      "Investing in startups and SMEs involves risks, including potential capital loss. Raise Africa advises investors to invest only what they are prepared to lose.",
-  },
-  {
-    question: "How can investors participate on Raise Africa?",
-    answer:
-      "Investors can sign up on the Raise Africa platform, browse available campaigns, and purchase token equity or token bonds using USDT.",
+      "Raise Africa leverages blockchain technology to ensure secure, transparent, and tamper-proof transactions through the use of smart contracts.",
   },
   {
     question:
-      "What is the process for startups and SMEs after submitting the campaign form?",
+      "Can I raise funds if my company is headquartered outside Africa?",
     answer:
-      "After submitting the form, the Raise Africa team reviews the application. Once approved, the company is guided through campaign creation and liquidity pool setup.",
+      "No, Raise Africa focuses on African SMEs. Companies headquartered outside Africa cannot raise funds on the platform.",
   },
   {
     question:
-      "What happens if a company does not raise the targeted funds within 6 months?",
+      "How do investors benefit from investing in my business on Raise Africa?",
     answer:
-      "If a company fails to raise its target funds within 6 months, Raise Africa refunds the service fees, ensuring no financial loss for the fundraising effort.",
+      "Investors can diversify their portfolios by investing in high-potential African SMEs. They can earn returns through equity appreciation or interest payments on bonds.",
+  },
+  {
+    question: "What happens if I don't meet my fundraising goal?",
+    answer:
+      "If the fundraising goal is not met within the specified period, Raise Africa refunds the 3% service fees. The campaign can be re-evaluated and re-submitted for another round of fundraising.",
+  },
+  {
+    question: "How can I promote my fundraising campaign?",
+    answer:
+      "Raise Africa provides tools and resources for campaign promotion. Businesses can also leverage their own networks, social media, and marketing strategies to attract investors.",
+  },
+  {
+    question: "How do I know if my campaign is successful?",
+    answer:
+      "A successful campaign meets or exceeds its fundraising goal within the specified timeframe. Raise Africa provides real-time tracking and analytics to monitor the campaign's progress.",
+  },
+  {
+    question: "How do I create an effective campaign on Raise Africa?",
+    answer:
+      "An effective campaign includes a compelling project description, clear financial goals, transparent business plans, and regular updates. Highlight your unique value proposition and the impact of the funds on your business growth.",
   },
   {
     question:
-      "How does Raise Africa support the promotion of fundraising campaigns?",
+      "What kind of support does Raise Africa provide during the fundraising process?",
     answer:
-      "Raise Africa shares campaigns within its network. However, campaign success depends significantly on promotion efforts by the company within its own community.",
+      "Raise Africa offers guidance on campaign creation, marketing strategies, and investor relations to help businesses achieve their funding goals.",
   },
   {
-    question:
-      "What support does Raise Africa offer to companies during the fundraising process?",
+    question: "How do I contact Raise Africa for support or more information?",
     answer:
-      "Raise Africa provides guidance on campaign creation, marketing strategies, and investor connections. It also offers resources to help maximize fundraising success.",
-  },
-  {
-    question:
-      "What are the next steps after successfully raising funds on Raise Africa?",
-    answer:
-      "After raising funds, companies must create a liquidity pool and add their token equity to the swap table. Funds can be used according to the business plan for growth and scaling.",
-  },
-  {
-    question: "How does Raise Africa ensure transparency and trustworthiness?",
-    answer:
-      "Raise Africa uses blockchain technology and smart contracts for transparency and security. Its decentralized platform minimizes fraud risks and enhances investor trust.",
-  },
-  {
-    question: "How can interested parties get in touch with Raise Africa?",
-    answer:
-      "Startups, SMEs, and investors can visit the Raise Africa website or contact the support team at support@raiseafrica.finance for more information.",
-  },
-  {
-    question: "What are the future plans for Raise Africa?",
-    answer:
-      "Raise Africa plans to expand its reach, improve the platform, and introduce new features to enhance the fundraising experience, aiming to become the leading decentralized fundraising platform in Africa.",
+      "You can contact Raise Africa's support team via email at support@raiseafrica.finance or visit the website for more information and resources.",
   },
 ];
+
+const faqDataForInvestors = [
+  {
+    question: "What is Raise Africa?",
+    answer:
+      "Raise Africa is a decentralized finance (DeFi) platform designed to facilitate capital raising for African startups and SMEs through token equity or token bonds. It leverages blockchain technology to provide a transparent and efficient marketplace for investors and businesses.",
+  },
+  {
+    question: "How does Raise Africa work?",
+    answer:
+      "Raise Africa enables investors to fund African startups and SMEs by purchasing tokens (equity or bonds) issued by these businesses. The platform uses blockchain technology to ensure secure, transparent, and efficient transactions.",
+  },
+  {
+    question: "Who can invest on Raise Africa?",
+    answer:
+      "Any individual or institutional investor looking to diversify their portfolio and support African businesses can invest on Raise Africa.",
+  },
+  {
+    question: "What types of investments can I make on Raise Africa?",
+    answer:
+      "You can invest in token equity (shares) or token bonds (loans) issued by African startups and SMEs. Token equity gives you ownership in the company, while token bonds are debt instruments with fixed returns.",
+  },
+  {
+    question: "How do I get started with investing on Raise Africa?",
+    answer:
+      "1. Sign Up and Verify: Create an account on Raise Africa by connecting your web3 wallet and purchasing RAF Token.\n2. Browse Opportunities: Explore the list of startups and SMEs raising funds on the platform.\n3. Choose an Investment: Select the project you wish to invest in and review the detailed information provided.\n4. Purchase Tokens: Buy the tokens (equity or bonds) using fiat currency (USDT).\n5. Track Your Investments: Monitor the progress of your investments through your Raise Africa dashboard.",
+  },
+  {
+    question: "How secure is my investment on Raise Africa?",
+    answer:
+      "Raise Africa leverages blockchain technology to ensure all transactions are secure and tamper-proof. Additionally, all startups and SMEs on the platform are recommended by reputable accelerators or incubators on the continent, providing an extra layer of credibility.",
+  },
+  {
+    question:
+      "What happens if a startup or SME fails to meet its funding goal?",
+    answer:
+      "If a startup or SME does not meet its funding goal within the specified period, your investment will be refunded. Raise Africa guarantees a refund of the service fees in such cases.",
+  },
+  {
+    question: "What if a startup or SME misuses the funds or defaults?",
+    answer:
+      "Raise Africa has partnerships with several arbitration and legal bodies to ensure investors' interests are protected. In case of any misuse or default, the following organizations will assist in recovery and legal actions: \n- African Arbitration Association (AfAA)\n- OHADA Common Court of Justice and Arbitration (CCJA)\n- Cairo Regional Centre for International Commercial Arbitration (CRCICA)\n- Rwanda International Arbitration Centre (RIAC)\n- East African Court of Justice (EACJ)\n- Africa Commercial Dispute Settlement Centre\n- International Chamber of Commerce (ICC)\n- London Court of International Arbitration (LCIA)",
+  },
+  {
+    question: "How do I earn returns on my investment?",
+    answer:
+      "If you invest in token equity, you may earn returns through dividends and potential appreciation of the company's value. For token bonds, you will receive fixed interest payments according to the terms specified by the issuing company.",
+  },
+  {
+    question:
+      "How are the funds managed and utilized by the startups and SMEs?",
+    answer:
+      "All startups and SMEs on Raise Africa are required to provide detailed plans on how the raised funds will be utilized. They must also create a liquidity reserve of 20% of the raised funds to ensure the ability to swap tokens or repay investors if necessary.",
+  },
+  {
+    question: "What are the fees associated with investing on Raise Africa?",
+    answer:
+      "Raise Africa charges a 3% commission on the total amount raised by the startups and SMEs. This fee is used to maintain the platform and ensure its smooth operation.",
+  },
+  {
+    question: "How do I monitor my investments?",
+    answer:
+      "Investors can track the progress and performance of their investments through the Raise Africa dashboard. The platform provides real-time updates and detailed analytics.",
+  },
+  {
+    question: "Can I sell my tokens before the maturity date?",
+    answer:
+      "Yes, token equity can be swapped for USDT at any time using the platform’s built-in liquidity pool. However, the liquidity of token bonds depends on the terms specified by the issuing company.",
+  },
+  {
+    question:
+      "What due diligence does Raise Africa perform on listed startups and SMEs?",
+    answer:
+      "Raise Africa conducts rigorous due diligence on all startups and SMEs before listing them on the platform. This includes verifying their business plans, financial statements, and recommendations from reputable accelerators or incubators.",
+  },
+  {
+    question: "How can I contact Raise Africa for support or more information?",
+    answer:
+      "You can contact Raise Africa's support team via email at support@raiseafrica.finance or visit our website for more information and resources.",
+  },
+];
+
 export default FAQPage;

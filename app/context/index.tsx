@@ -18,6 +18,7 @@ import axios from "axios";
 import * as RAF from "./raf";
 import * as CROWDFUNDING from "./crowdfunding";
 import * as USDT from "./usdt";
+import * as TUSDT from "./tusdt";
 
 import { client } from "../constants";
 import { toast } from "react-toastify";
@@ -38,7 +39,7 @@ export const StateContextProvider = ({ children }) => {
     {} as Proposition,
   );
   const router = useRouter();
-  //const BACKEND_URL = "http://127.0.0.1:5000";
+  // const BACKEND_URL = "http://127.0.0.1:5000";
   const BACKEND_URL = "https://raiseafrica.finance/flask";
   const [campaignsFilteredCategories, setCampaignsFilteredCategories] =
     useState<string[]>([]);
@@ -92,7 +93,7 @@ export const StateContextProvider = ({ children }) => {
         const transaction = prepareContractCall({
           contract: CROWDFUNDING.contract,
           method:
-            "function createCampaign(address _creator, uint256 _target, uint256 _deadline, string _company) returns (uint256)",
+            "function createCampaign(address _creator, uint256 _target, uint256 _deadline, string _company) payable returns (uint256)",
           params: [
             account.address,
             toUnits(_target.toString(), 18),
@@ -112,6 +113,11 @@ export const StateContextProvider = ({ children }) => {
   };
 
   const createCampaign = async (_campaign: Campaign) => {
+    await allowUsdtSpending(
+      1,
+      "0x713a8d9528996cD5bB6208d38Eb0715386190108",
+      TUSDT.contract,
+    );
     await createOnBlockchain(
       _campaign.target,
       new Date(_campaign.deadline).getTime(),
@@ -390,14 +396,18 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
-  const allowUsdtSpending = async (usdtAmount: number) => {
+  const allowUsdtSpending = async (
+    usdtAmount: number,
+    address = RAF.BUY_RAF_ADDRESS,
+    contract = USDT.contract,
+  ) => {
     if (account) {
       try {
         const approveTransaction = prepareContractCall({
-          contract: USDT.contract,
+          contract: contract,
           method:
             "function approve(address spender, uint256 amount) external returns (bool)",
-          params: [RAF.BUY_RAF_ADDRESS, toUnits(usdtAmount.toString(), 18)],
+          params: [address, toUnits(usdtAmount.toString(), 18)],
         });
 
         const { transactionHash } = await sendAndConfirmTransaction({
@@ -480,18 +490,28 @@ export const StateContextProvider = ({ children }) => {
     });
   };
 
-  const invest = async (_id: number, amount: number) => {
+  const invest = async (_id: number, amount: number, _campaign: Campaign) => {
     if (account) {
-      await allowUsdtSpending(amount + 1);
+      await allowUsdtSpending(
+        amount + 1,
+        "0x713a8d9528996cD5bB6208d38Eb0715386190108",
+        TUSDT.contract,
+      );
       const transaction = prepareContractCall({
         contract: CROWDFUNDING.contract,
-        method: "function donateToCampaign(uint256 _id) payable",
-        params: [toUnits(_id.toString(), 18)],
+        method:
+          "function donateToCampaign(uint256 _id, uint256 amount) payable",
+        params: [
+          toUnits(_id.toString(), 18),
+          toUnits((amount + 1).toString(), 18),
+        ],
       });
       const { transactionHash } = await sendAndConfirmTransaction({
         transaction,
         account,
       });
+      console.log(_campaign);
+      await axios.post(`${BACKEND_URL}/campaigns/save`, _campaign);
     }
   };
 
@@ -516,6 +536,7 @@ export const StateContextProvider = ({ children }) => {
         addToWaitingList,
         rafPrice,
         buyRaf,
+        invest,
         campaignsFilteredCategories,
         setCampaignsFilteredCategories,
         createProposition,

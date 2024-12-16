@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 //@ts-ignore
-const SocialNetwork = ({ onSocialNetworksUpdate, name }) => {
+const SocialNetwork = ({ onSocialNetworksUpdate, name, link = "" }) => {
   const [socialNetwork, setCurrentSocialNetwork] = useState({
     name: name,
-    link: "",
+    link: link,
   } as SocialNetwork);
   const onSubmit = () => {
     onSocialNetworksUpdate(socialNetwork);
@@ -27,6 +27,7 @@ const SocialNetwork = ({ onSocialNetworksUpdate, name }) => {
           type="url"
           className="input input-bordered h-10 rounded w-52 "
           onChange={(e) => handleFieldChange("link", e)}
+          defaultValue={link}
         />
       </div>
     </div>

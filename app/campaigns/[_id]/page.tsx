@@ -13,9 +13,10 @@ import CompanyDescription from "../../components/CompanyDescription";
 import usdtLogo from "../../../public/images/tether-usdt-logo.png";
 import Loader from "../../components/Loader";
 import AlertModal from "../../components/AlertModal";
+import { toast } from "react-toastify";
 
 const CampaignDetails = ({ params }: { params: { _id: string } }) => {
-  const { getCampaign, getDonors, invest } = useStateContext();
+  const { getCampaign, getDonors, invest, account } = useStateContext();
   const [campaign, setCampaign] = useState<Campaign>();
   const [donors, setDonors] = useState<string[]>([]);
   const [remainingDays, setRemainingDays] = useState<string>("");
@@ -32,7 +33,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
         setRemainingDays(
           daysLeft(new Date(campaign.deadline).getTime()) as string,
         );
-
+        console.log(donors);
         setDonors(donors[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -41,9 +42,30 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
     fetchCampaign();
   }, []);
 
-  const handleConfirm = () => {
-    console.log("Cancelled!");
+  const handleConfirm = async () => {
     setIsAlertOpen(false);
+    setIsLoading(true);
+    if (account) {
+      try {
+        if (campaign) {
+          const _campaign = campaign;
+          _campaign.raised += investedAmount;
+          await invest(campaign.id, investedAmount, _campaign);
+          setIsLoading(false);
+          toast.success("You have successfully invested in this project", {
+            position: "top-center",
+            theme: "dark",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("Please connect your account", {
+        position: "top-center",
+        theme: "dark",
+      });
+    }
   };
   const handleCancel = () => {
     console.log("Cancelled!");
@@ -291,6 +313,17 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
               <h4 className={"font-semibold text-lg text-white uppercase"}>
                 Invest
               </h4>
+              <div className={"flex flex-col w-full items-center gap-2"}>
+                <h2 className={"text-lg w-full text-primary font-medium"}>
+                  Important Notice
+                </h2>
+                <p className={"text-sm text-white"}>
+                  Investing in startups and SMEs carries high risks. Raise
+                  Africa does not guarantee returns or investment success.
+                  Invest only what you can afford to lose and conduct thorough
+                  due diligence before investing.
+                </p>
+              </div>
               <div
                 className={
                   "bg-[#222221] flex flex-col gap-5 p-8 w-80 mt-5  rounded"
@@ -329,7 +362,12 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
                   you will own {investedAmount / campaign.company.nft.price} of{" "}
                   {campaign.company.name} {campaign.company.nft.type}
                 </p>
-                <button className={"btn btn-primary"}>Invest</button>
+                <button
+                  onClick={() => setIsAlertOpen(true)}
+                  className={"btn btn-primary"}
+                >
+                  Invest
+                </button>
               </div>
             </div>
           </div>

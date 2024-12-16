@@ -5,6 +5,7 @@ import {
   sectorsAndIndustries,
   africanCountries,
 } from "../../constants";
+import { numberOfShares } from "../../utils";
 import FormField from "../../components/FormField";
 import moneyBag from "../../../public/images/money-bag.png";
 import Image from "next/image";
@@ -48,6 +49,8 @@ const CreateCampaignPage = () => {
     useState<string>("");
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [goal, setGoal] = useState<number>(0);
+  const [unitPrice, setUnitPrice] = useState<number>(0);
 
   const [campaignForm, setCampaignForm] = useState<CampaignInputs>(
     {} as CampaignInputs,
@@ -56,6 +59,8 @@ const CreateCampaignPage = () => {
   const selectedSector: string = watch("sector");
   const selectedNftType: string = watch("nftType");
   const selectedCompanyType: string = watch("companyType");
+  const inputGoal: number = watch("targetedAmount");
+  const inputUnitPrice: number = watch("nftUnitPrice");
 
   const CountriesOptions: { key: number; value: string; text: string }[] = [];
   africanCountries.forEach((country) => {
@@ -74,8 +79,9 @@ const CreateCampaignPage = () => {
         if (campaign) {
           const { campaignForm, socialNetworks } = destructCampaign(campaign);
           reset(campaignForm);
-
+          console.log(socialNetworks);
           setSocialNetworks(socialNetworks);
+
           const companyFounders = campaignForm.founders;
           setFounders(companyFounders);
           setDemoUrl(campaignForm.demo);
@@ -97,6 +103,14 @@ const CreateCampaignPage = () => {
   useEffect(() => {
     setRaiseThroughBonds(selectedNftType == "Bond");
   }, [selectedNftType]);
+
+  useEffect(() => {
+    setGoal(inputGoal);
+  }, [inputGoal]);
+
+  useEffect(() => {
+    setUnitPrice(inputUnitPrice);
+  }, [inputUnitPrice]);
 
   useEffect(() => {
     setIsStartup(selectedCompanyType == "Startup");
@@ -538,30 +552,6 @@ const CreateCampaignPage = () => {
                     className="w-full h-96 border-2"
                   />
                 )}
-                {/*<FormField*/}
-                {/*  //@ts-ignore*/}
-                {/*  inputType={"file"}*/}
-                {/*  labelName={*/}
-                {/*    "Upload your latest certified financial statements: (if applicable)"*/}
-                {/*  }*/}
-                {/*  placeholder={""}*/}
-                {/*  error={*/}
-                {/*    errors.financialStatements*/}
-                {/*      ? errors.financialStatements.message*/}
-                {/*      : undefined*/}
-                {/*  }*/}
-                {/*  {...register("financialStatements", {*/}
-                {/*    validate: (file: File | undefined) => {*/}
-                {/*      if (file && file.type !== "application/pdf") {*/}
-                {/*        return "Only PDF files are allowed.";*/}
-                {/*      }*/}
-                {/*      if (file && file.size > 10 * 1024 * 1024) {*/}
-                {/*        return "File must be under 10MB.";*/}
-                {/*      }*/}
-                {/*      return true;*/}
-                {/*    },*/}
-                {/*  })}*/}
-                {/*/>*/}
               </div>
               <label className="form-control w-max flex-1 flex flex-col">
                 <div className="label">
@@ -603,7 +593,6 @@ const CreateCampaignPage = () => {
                     required: "This field is required",
                   })}
                 />
-
                 <FormField
                   //@ts-ignore
                   isSelect={true}
@@ -666,22 +655,30 @@ const CreateCampaignPage = () => {
                   {...register("nftUnitPrice", {
                     required: "This field is required",
                   })}
-                />
-                <FormField
-                  //@ts-ignore
-                  inputType={"text"}
-                  labelName={
-                    "Name or Initials you want to give to your token: *"
-                  }
-                  placeholder={"TAL"}
-                  error={
-                    errors.NFTInitials ? errors.NFTInitials.message : undefined
-                  }
-                  {...register("NFTInitials", {
-                    required: "This field is required",
-                  })}
-                />
+                />{" "}
               </div>
+              {unitPrice != 0 && goal != 0 && (
+                <p className={"my-4"}>
+                  <span className={"text-lg text-primary font-medium"}>
+                    {numberOfShares(unitPrice, goal)}
+                  </span>
+                  {raiseThroughBonds ? " bonds " : " equities "}
+                  will be available for the investors
+                </p>
+              )}
+              <FormField
+                //@ts-ignore
+                inputType={"text"}
+                labelName={"Name or Initials you want to give to your token: *"}
+                placeholder={"TAL"}
+                error={
+                  errors.NFTInitials ? errors.NFTInitials.message : undefined
+                }
+                {...register("NFTInitials", {
+                  required: "This field is required",
+                })}
+              />
+
               <FormField
                 //@ts-ignore
                 labelName={"Intended use of the raised funds *"}
@@ -726,16 +723,25 @@ const CreateCampaignPage = () => {
               <SocialNetwork
                 onSocialNetworksUpdate={handleSocialNetworksUpdate}
                 name={"Website"}
+                link={
+                  socialNetworks.filter((s) => s.name == "Website")[0]?.link
+                }
               />
 
               <SocialNetwork
                 onSocialNetworksUpdate={handleSocialNetworksUpdate}
                 name={"LinkedIn"}
+                link={
+                  socialNetworks.filter((s) => s.name == "LinkedIn")[0]?.link
+                }
               />
 
               <SocialNetwork
                 onSocialNetworksUpdate={handleSocialNetworksUpdate}
                 name={"Facebook"}
+                link={
+                  socialNetworks.filter((s) => s.name == "Facebook")[0]?.link
+                }
               />
             </div>
             <div
