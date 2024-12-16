@@ -378,7 +378,7 @@ const CampaignDetails = ({ params }: { params: { _id: string } }) => {
           </div>
           <AlertModal
             isOpen={isAlertOpen}
-            message="You will not be able to edit the submitted campaign. Are you sure you want to proceed?"
+            message="This transaction cannot be reverted. Are you sure you want to proceed?"
             onConfirm={handleConfirm}
             onCancel={handleCancel}
           />
