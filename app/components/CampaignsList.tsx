@@ -11,7 +11,9 @@ const CampaignsList = () => {
     const fetchCampaigns = async () => {
       try {
         const campaigns: Campaign[] = await getActiveCampaigns();
-        setCampaigns(campaigns);
+        console.log("Fetched campaigns:", campaigns);
+        setCampaigns(Array.isArray(campaigns) ? campaigns : []);
+        //setCampaigns(campaigns);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -25,7 +27,7 @@ const CampaignsList = () => {
         "flex flex-col sm:gap-8 sm:flex-wrap md:grid md:grid-cols-2  lg:grid-cols-3 mt-8 gap-14"
       }
     >
-      {campaigns &&
+      {Array.isArray(campaigns) &&
         campaigns.map((campaign, index) => (
           <CampaignCard key={index} campaign={campaign} />
         ))}
