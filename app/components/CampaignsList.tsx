@@ -10,14 +10,13 @@ const CampaignsList = () => {
     const fetchCampaigns = async () => {
       try {
         const campaigns: Campaign[] = await getActiveCampaigns();
-        console.log("Fetched campaigns:", campaigns);
         setCampaigns(Array.isArray(campaigns) ? campaigns : []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchCampaigns();
-  }, [getActiveCampaigns]);
+  }, []);
 
   return (
     <div

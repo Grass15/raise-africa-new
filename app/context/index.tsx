@@ -136,7 +136,7 @@ export const StateContextProvider = ({ children }) => {
   const saveCampaign = async (_campaign: Campaign) => {
     _campaign.creator = account ? account.address : "";
 
-    await axios.post(`${BACKEND_URL}/campaigns/save`, _campaign);
+    await axios.post(`${BACKEND_URL}/campaigns-data/save`, _campaign);
   };
 
   const createProposition = async (proposition: Proposition) => {
@@ -162,7 +162,7 @@ export const StateContextProvider = ({ children }) => {
   const addToWaitingList = async (business: any) => {
     console.log(business);
     axios
-      .post(`${BACKEND_URL}/projects/waiting-list`, business)
+      .post(`${BACKEND_URL}/campaigns-data/waiting-list`, business)
       .then((res) => {
         console.log(res.data);
         toast.success(
@@ -183,7 +183,7 @@ export const StateContextProvider = ({ children }) => {
 
   const getUserSavedCampaign = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/campaigns/saved`, {
+      const response = await axios.get(`${BACKEND_URL}/campaigns-data/saved`, {
         params: {
           creator: account ? account.address : "",
         },
@@ -452,7 +452,7 @@ export const StateContextProvider = ({ children }) => {
     });
 
   const getActiveCampaigns = async () => {
-    const response = await axios.get(`${BACKEND_URL}/campaigns`);
+    const response = await axios.get(`${BACKEND_URL}/campaigns-data`);
     if (response) {
       console.log("Active campaigns: ", response.data);
       return response.data as Campaign[];
@@ -460,7 +460,7 @@ export const StateContextProvider = ({ children }) => {
   };
 
   const getCampaign = async (_id: string) => {
-    const response = await axios.get(`${BACKEND_URL}/campaigns`, {
+    const response = await axios.get(`${BACKEND_URL}/campaigns-data`, {
       params: {
         _id: _id,
       },
@@ -471,7 +471,7 @@ export const StateContextProvider = ({ children }) => {
     }
   };
   const getUserCampaigns = async (user: string) => {
-    const response = await axios.get(`${BACKEND_URL}/campaigns`, {
+    const response = await axios.get(`${BACKEND_URL}/campaigns-data`, {
       params: {
         user: user,
       },
@@ -512,7 +512,7 @@ export const StateContextProvider = ({ children }) => {
         account,
       });
       console.log(_campaign);
-      await axios.post(`${BACKEND_URL}/campaigns/save`, _campaign);
+      await axios.post(`${BACKEND_URL}/campaigns-data/save`, _campaign);
     }
   };
 

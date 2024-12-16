@@ -23,7 +23,7 @@ const ProfilePage = () => {
         console.log(err);
       }
     })();
-  }, [getUserCampaigns]);
+  }, []);
 
   return (
     <section className={"flex flex-col gap-6 px-5 py-5 w-full "}>
