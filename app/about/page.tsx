@@ -50,33 +50,6 @@ const AboutPage = () => {
               <ul className="flex flex-col gap-5">
                 {[
                   {
-                    label: "Access to Companies",
-                    text: "Discover and invest in a wide variety of businesses.",
-                  },
-                  {
-                    label: "Access to Investors",
-                    text: "Connect with global investors eager to support impactful ventures.",
-                  },
-                  {
-                    label: "Affordable Solutions",
-                    text: "Transparent, low-cost crowdfunding services.",
-                  },
-                  {
-                    label: "Efficient Disbursement",
-                    text: "Ensuring timely and secure distribution of funds.",
-                  },
-                ].map((item, index) => (
-                  <li key={index}>
-                    <p>
-                      <span className="text-primary">{item.label}: </span>
-                      {item.text}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-              <ul className="flex flex-col gap-5">
-                {[
-                  {
                     label: "Marcel Eboa: ",
                     text: "Co-founder & CEO",
                   },

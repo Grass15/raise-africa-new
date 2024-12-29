@@ -4,44 +4,96 @@ import avatar from "../../public/images/avatar.png";
 import ButtonDisconnect from "./ButtonDisconnect";
 import ButtonBuy from "./ButtonBuy";
 import Logo from "../../public/images/logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usdtLogo from "../../public/images/tether-usdt-logo.png";
 import { useStateContext } from "../context";
 import { toast } from "react-toastify";
 import Loader from "./Loader";
+import { useSearchParams } from "next/navigation";
 
 const BuyModal = ({ text = "" }) => {
-  const { rafBalance, isConnected, usdtBalance, rafPrice, buyRaf } =
-    useStateContext();
+  const {
+    rafBalance,
+    isConnected,
+    account,
+    addEarning,
+    usdtBalance,
+    rafPrice,
+    buyRaf,
+    getAffiliateByReferredAddress,
+    getAffiliateByAffiliationId,
+    affiliateIdFromCookie,
+  } = useStateContext();
+  const searchParams = useSearchParams();
+
+  const affiliateIdFromUrl = searchParams.get("ref");
+
   const [usdtAmount, setUsdtAmount] = useState(0);
   const [rafAmount, setRafAmount] = useState(0);
   const [isLoading, setIsloading] = useState(false);
+  const [affiliateAddress, setAffiliateAddress] = useState<string>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const affiliate = await getAffiliateByReferredAddress();
+        if (affiliate) {
+          setAffiliateAddress(affiliate["address"]);
+        } else {
+          const affiliationId = affiliateIdFromCookie || affiliateIdFromUrl;
+          if (affiliationId) {
+            const affiliate = await getAffiliateByAffiliationId(affiliationId);
+            if (affiliate) {
+              setAffiliateAddress(affiliate["address"]);
+            }
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [account]);
+
   //@ts-ignore
   const handleUsdtInput = (e) => {
     const inputValue = e.target.value;
     if (/^\d*\.?\d*$/.test(inputValue)) {
-      setUsdtAmount(inputValue);
-      setRafAmount(Number((inputValue / rafPrice).toFixed(4)));
+      const temp = Math.round(inputValue / rafPrice);
+      setUsdtAmount(Number((temp * rafPrice).toFixed(3)) + 1);
+      setRafAmount(temp);
     }
   };
   //@ts-ignore
   const handleRafInput = (e) => {
     const inputValue = e.target.value;
     if (/^\d*\.?\d*$/.test(inputValue)) {
-      setRafAmount(inputValue);
-      setUsdtAmount(Number((inputValue * rafPrice).toFixed(4)) + 1);
+      const temp = Math.round(inputValue);
+      setRafAmount(temp);
+      setUsdtAmount(Number((temp * rafPrice).toFixed(3)) + 1);
     }
   };
   const buy = async () => {
     if (isConnected) {
       try {
         setIsloading(true);
-        await buyRaf(usdtAmount, rafAmount);
+        await buyRaf(usdtAmount, rafAmount, affiliateAddress);
         setIsloading(false);
         toast.success("Transaction succeed.", {
           position: "top-center",
           theme: "dark",
         });
+        if (affiliateAddress) {
+          try {
+            const affiliateEarn = {
+              address: account.address,
+              amount: Number((usdtAmount * 0.1).toFixed(3)),
+              date: new Date(),
+            } as Referred;
+            await addEarning(affiliateAddress, affiliateEarn);
+          } catch (e) {
+            console.log(e);
+          }
+        }
       } catch (error) {
         console.error(error);
         toast.error(
@@ -59,6 +111,7 @@ const BuyModal = ({ text = "" }) => {
       });
     }
   };
+
   return (
     <>
       <label htmlFor="raf_buying_modal">

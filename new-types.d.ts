@@ -167,3 +167,9 @@ type CampaignInputs = {
   creationDate: Date;
   campaignDeadline: Date;
 };
+
+type Referred = {
+  address: string;
+  amount: number;
+  date: Date;
+};

@@ -74,6 +74,9 @@ const Footer = () => {
         <Link className={`hover:text-primary`} href={"/cookie-policy"}>
           Cookie policy
         </Link>
+        <Link className={`hover:text-primary`} href={"/affiliation"}>
+          Affiliation
+        </Link>
         {/*<a className="link link-hover">Terms of use</a>*/}
         {/*<a className="link link-hover">Privacy policy</a>*/}
         {/*<a className="link link-hover">Cookie policy</a>*/}

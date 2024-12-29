@@ -13,7 +13,7 @@ const Loader = () => {
         alt="Loader"
       />
       <p className="mt-[20px] font-epilogue font-bold text-[20px] text-white text-center">
-        Transaction is in progress <br /> Please wait...
+        In progress <br /> Please wait...
       </p>
     </div>
   );

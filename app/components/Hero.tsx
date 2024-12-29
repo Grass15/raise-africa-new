@@ -4,9 +4,19 @@ import Image from "next/image";
 import Logo from "../../public/images/logo.png";
 import { useStateContext } from "../context";
 import BuyModal from "./BuyModal";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const Hero = () => {
-  const { account } = useStateContext();
+  const searchParams = useSearchParams();
+  const { addReferred } = useStateContext();
+
+  useEffect(() => {
+    const affiliateId = searchParams.get("ref");
+    if (affiliateId) {
+      fetch(`/api/update-affiliate?ref=${affiliateId}`);
+    }
+  }, []);
   return (
     <div className="grid max-w-screen-lg px-5 pb-5 mx-auto sm:gap-5 xl:gap-0  sm:grid-cols-12">
       <div className="mr-auto flex flex-col gap-2 place-self-center sm:col-span-6">

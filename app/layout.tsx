@@ -7,14 +7,15 @@ import Footer from "./components/Footer";
 import { StateContextProvider } from "./context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import { TawkMessengerReact } from "./components/Tawk";
 import Script from "next/script";
+import { cookies } from "next/headers";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const ref = cookies().get("affiliate_id");
   return (
     <html lang="en" data-theme="black" className={"text-white"}>
       <head>
@@ -60,7 +61,7 @@ export default function RootLayout({
           }}
         />
         <ThirdwebProvider>
-          <StateContextProvider>
+          <StateContextProvider affiliateIdFromCookie={ref?.value}>
             <ToastContainer />
             <MainNavbar />
             {children}

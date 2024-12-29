@@ -24,11 +24,12 @@ import { client } from "../constants";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { undefined } from "zod";
+import { ethers } from "ethers";
 
 const StateContext: React.Context<any> = createContext(client);
 
 // @ts-ignore
-export const StateContextProvider = ({ children }) => {
+export const StateContextProvider = ({ children, affiliateIdFromCookie }) => {
   const account = useActiveAccount();
   const isConnected = !!account;
   const wallet = useActiveWallet();
@@ -39,8 +40,8 @@ export const StateContextProvider = ({ children }) => {
     {} as Proposition,
   );
   const router = useRouter();
-  // const BACKEND_URL = "http://127.0.0.1:5000";
-  const BACKEND_URL = "https://raiseafrica.finance/flask";
+  const BACKEND_URL = "http://127.0.0.1:5000";
+  // const BACKEND_URL = "https://raiseafrica.finance/flask";
   const [campaignsFilteredCategories, setCampaignsFilteredCategories] =
     useState<string[]>([]);
   const [propositionsFilteredCategories, setPropositionsFilteredCategories] =
@@ -420,25 +421,34 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
-  const buyRaf = async (usdtAmount: number, rafAmount: number) => {
+  const buyRaf = async (
+    usdtAmount: number,
+    rafAmount: number,
+    affiliateAddress: string | null,
+  ) => {
     if (account) {
       await allowUsdtSpending(usdtAmount);
-      const contract = RAF.buyContract();
       const allowance = await readContract({
         contract: USDT.contract,
         method:
           "function allowance(address owner, address spender) view returns (uint256)",
         params: [account.address, RAF.BUY_RAF_ADDRESS],
       });
-      if (
-        contract &&
-        allowance &&
-        allowance >= toUnits(usdtAmount.toString(), 18)
-      ) {
-        await contract.buyRAFWithUSDT(
-          toUnits(usdtAmount.toString(), 18),
-          toUnits(rafAmount.toString(), 18),
-        );
+      if (allowance && allowance >= toUnits(usdtAmount.toString(), 18)) {
+        const transaction = prepareContractCall({
+          contract: RAF.buyContract,
+          method:
+            "function buyRAFWithUSDT(uint256 usdt_amount, uint256 raf_amount, address affiliate) payable",
+          params: [
+            toUnits(usdtAmount.toString(), 18),
+            toUnits(rafAmount.toString(), 18),
+            affiliateAddress || ethers.constants.AddressZero,
+          ],
+        });
+        const { transactionHash } = await sendAndConfirmTransaction({
+          transaction,
+          account,
+        });
       }
     }
   };
@@ -514,9 +524,102 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const integrateAffiliation = async () => {
+    if (account) {
+      const response = await axios.post(
+        `${BACKEND_URL}/affiliation/add-affiliate`,
+        {
+          wallet_address: account.address,
+        },
+      );
+      if (response) {
+        return response.data;
+      }
+    }
+  };
+
+  const getAffiliateByAffiliationId = async (affiliationId: string) => {
+    const response = await axios.get(
+      `${BACKEND_URL}/affiliation/get-affiliate-by-id`,
+      {
+        params: {
+          affiliation_id: affiliationId,
+        },
+      },
+    );
+    if (response) {
+      return response.data;
+    }
+  };
+
+  const getAffiliateByAddress = async () => {
+    if (account) {
+      const response = await axios.get(
+        `${BACKEND_URL}/affiliation/get-affiliate-by-address`,
+        {
+          params: {
+            wallet_address: account.address,
+          },
+        },
+      );
+      if (response) {
+        return response.data;
+      }
+    }
+  };
+
+  const getAffiliateByReferredAddress = async () => {
+    if (account) {
+      const response = await axios.get(
+        `${BACKEND_URL}/affiliation/get-affiliate-by-referred-address`,
+        {
+          params: {
+            referred_address: account.address,
+          },
+        },
+      );
+      if (response) {
+        return response.data;
+      }
+    }
+  };
+
+  const addReferred = async (affiliationId: string) => {
+    if (account) {
+      const response = await axios.post(
+        `${BACKEND_URL}/affiliation/add-referred`,
+        {
+          affiliation_id: affiliationId,
+          referred_address: account.address,
+        },
+      );
+      if (response) {
+        return response.data;
+      }
+    }
+  };
+
+  const addEarning = async (affiliateAddress: string, earned: Referred) => {
+    if (account) {
+      const response = await axios.post(
+        `${BACKEND_URL}/affiliation/add-earning`,
+        {
+          affiliate_address: affiliateAddress,
+          earned: earned,
+        },
+      );
+      if (response) {
+        return response.data;
+      }
+    }
+  };
+
+  //liquidity pool 0xE2924A56E8b7763648aA56380E39d9A4f17120c1
+
   return (
     <StateContext.Provider
       value={{
+        affiliateIdFromCookie,
         client,
         account,
         wallet,
@@ -536,6 +639,12 @@ export const StateContextProvider = ({ children }) => {
         rafPrice,
         buyRaf,
         invest,
+        integrateAffiliation,
+        getAffiliateByAffiliationId,
+        getAffiliateByAddress,
+        addEarning,
+        addReferred,
+        getAffiliateByReferredAddress,
         campaignsFilteredCategories,
         setCampaignsFilteredCategories,
         createProposition,

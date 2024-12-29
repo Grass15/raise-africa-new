@@ -11,6 +11,9 @@ import {
 export const client = createThirdwebClient({
   clientId: "192f35bed07f84beca88ff583b0522f7",
 });
+export const clientForBsc = createThirdwebClient({
+  clientId: "ba78c323af9fbe80b9c82040f382037a",
+});
 
 export const startupCategories = [
   "Health",

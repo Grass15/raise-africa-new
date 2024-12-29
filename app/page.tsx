@@ -18,6 +18,7 @@ import onChainRaf from "../public/images/home/on_chain_feat.png";
 import Card from "./components/Card";
 import CardNoButton from "./components/CardNoButton";
 import TranslationWrapper from "./components/TranslationWrapper";
+import { cookies } from "next/headers";
 
 const Page = () => {
   return (
