@@ -40,8 +40,8 @@ export const StateContextProvider = ({ children, affiliateIdFromCookie }) => {
     {} as Proposition,
   );
   const router = useRouter();
-  const BACKEND_URL = "http://127.0.0.1:5000";
-  // const BACKEND_URL = "https://raiseafrica.finance/flask";
+  // const BACKEND_URL = "http://127.0.0.1:5000";
+  const BACKEND_URL = "https://raiseafrica.finance/flask";
   const [campaignsFilteredCategories, setCampaignsFilteredCategories] =
     useState<string[]>([]);
   const [propositionsFilteredCategories, setPropositionsFilteredCategories] =
